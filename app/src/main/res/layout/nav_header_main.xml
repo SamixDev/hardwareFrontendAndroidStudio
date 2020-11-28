@@ -23,7 +23,6 @@
         app:cardCornerRadius="20dp"
         app:cardUseCompatPadding="true"
         app:cardElevation="0dp"
-
         >
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imagenav"

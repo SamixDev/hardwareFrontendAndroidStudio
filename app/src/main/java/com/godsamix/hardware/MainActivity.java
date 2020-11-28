@@ -38,14 +38,22 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     private AppBarConfiguration mAppBarConfiguration;
     private GoogleSignInClient mGoogleSignInClient;
-
-
+    private SignInButton signInButton;
+    private Button signOutButton;
     private NavigationView navigationView;
-
+    private TextView name;
+    private TextView mail;
+    private ImageView img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        navigationView = findViewById(R.id.nav_view);
+
+        name = navigationView.getHeaderView(0).findViewById(R.id.namenav);
+        mail = navigationView.getHeaderView(0).findViewById(R.id.emailnav);
+        img = navigationView.getHeaderView(0).findViewById(R.id.imagenav);
+
 
 // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -58,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         //updateUI(account);
-         navigationView = findViewById(R.id.nav_view);
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
@@ -74,10 +82,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-        //update layout from sign in
-        updateUI(account);
+
         // Set the dimensions of the sign-in button.
-        SignInButton signInButton = navigationView.getHeaderView(0).findViewById(R.id.sign_in_button);
+        signInButton = navigationView.getHeaderView(0).findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -89,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //sign out button
-        Button signOutButton = navigationView.getHeaderView(0).findViewById(R.id.sign_out_button);
+        signOutButton = navigationView.getHeaderView(0).findViewById(R.id.sign_out_button);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 signOut();
@@ -97,12 +104,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
+//update layout from sign in
+        updateUI(account);
     }
     private void updateUI(@Nullable GoogleSignInAccount account) {
-        TextView name = navigationView.getHeaderView(0).findViewById(R.id.namenav);
-        TextView mail = navigationView.getHeaderView(0).findViewById(R.id.emailnav);
-        ImageView img = navigationView.getHeaderView(0).findViewById(R.id.imagenav);
         if (account != null) {
             // Set the name in the nav head
              name.setText(account.getDisplayName());
@@ -115,12 +120,14 @@ if (account.getPhotoUrl() == null){
     Picasso.get().load(account.getPhotoUrl()).into(img);
 }
 
-         //   findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-         //   findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            signInButton.setVisibility(View.GONE);
+            signOutButton.setVisibility(View.VISIBLE);
         } else {
             name.setText("");
             mail.setText("");
             img.setImageResource(R.drawable.profiledefault);
+            signInButton.setVisibility(View.VISIBLE);
+            signOutButton.setVisibility(View.GONE);
         }
     }
     @Override
