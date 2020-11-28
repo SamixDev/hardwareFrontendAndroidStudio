@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,10 +15,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.navigation.NavController;
@@ -28,11 +31,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 9001;
     private AppBarConfiguration mAppBarConfiguration;
-
+    private GoogleSignInClient mGoogleSignInClient;
 
 
     private NavigationView navigationView;
@@ -48,17 +53,17 @@ public class MainActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 // Build a GoogleSignInClient with the options specified by gso.
-        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         // Check for existing Google Sign In account, if the user is already signed in
 // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI(account);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        //updateUI(account);
          navigationView = findViewById(R.id.nav_view);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(null);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(null);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_menu,
                 R.id.nav_build, R.id.nav_board, R.id.nav_cpu,R.id.nav_version,R.id.nav_about,R.id.nav_vga)
@@ -67,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        //update layout from sign in
+        updateUI(account);
         // Set the dimensions of the sign-in button.
         SignInButton signInButton = navigationView.getHeaderView(0).findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
@@ -79,27 +88,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //sign out button
+        Button signOutButton = navigationView.getHeaderView(0).findViewById(R.id.sign_out_button);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                signOut();
+            }
+        });
+
 
 
     }
     private void updateUI(@Nullable GoogleSignInAccount account) {
+        TextView name = navigationView.getHeaderView(0).findViewById(R.id.namenav);
+        TextView mail = navigationView.getHeaderView(0).findViewById(R.id.emailnav);
+        ImageView img = navigationView.getHeaderView(0).findViewById(R.id.imagenav);
         if (account != null) {
             // Set the name in the nav head
-             TextView name = navigationView.getHeaderView(0).findViewById(R.id.namenav);
              name.setText(account.getDisplayName());
-           TextView mail = navigationView.getHeaderView(0).findViewById(R.id.emailnav);
             mail.setText(account.getEmail());
-            ImageView img = navigationView.getHeaderView(0).findViewById(R.id.imagenav);
           //  img.setImageURI(account.getPhotoUrl());
-            Picasso.get().load(account.getPhotoUrl()).into(img);
+if (account.getPhotoUrl() == null){
 
-            Toast.makeText(getApplicationContext(),"Hello Javatpoint",Toast.LENGTH_SHORT).show();
-          //  mStatusTextView.setText(getString(R.string.signed_in_fmt, account.getDisplayName()));
+    img.setImageResource(R.drawable.profiledefault);
+}else{
+    Picasso.get().load(account.getPhotoUrl()).into(img);
+}
 
          //   findViewById(R.id.sign_in_button).setVisibility(View.GONE);
          //   findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
-
+            name.setText("");
+            mail.setText("");
+            img.setImageResource(R.drawable.profiledefault);
         }
     }
     @Override
@@ -131,6 +152,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     // [END handleSignInResult]
+
+    // [START signOut]
+    private void signOut() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // [START_EXCLUDE]
+                        updateUI(null);
+                        // [END_EXCLUDE]
+                    }
+                });
+    }
+    // [END signOut]
+
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
