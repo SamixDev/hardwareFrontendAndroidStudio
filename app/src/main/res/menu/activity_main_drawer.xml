@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_menu"
+            android:icon="@drawable/menu"
+            android:title="@string/main"
+            android:checkable="true"
+            />
+
+
+        <item android:title="Hardware">
+            <menu>
+                <item
+                    android:id="@+id/nav_build"
+                    android:icon="@drawable/pc"
+                    android:title="@string/build"
+                    android:checkable="true"/>
+                <item
+                    android:id="@+id/nav_board"
+                    android:icon="@drawable/board"
+                    android:title="@string/board"
+                    android:checkable="true"/>
+                <item
+                    android:id="@+id/nav_cpu"
+                    android:icon="@drawable/cpu"
+                    android:title="@string/cpu"
+                    android:checkable="true"/>
+                <item
+                    android:id="@+id/nav_vga"
+                    android:icon="@drawable/vga"
+                    android:title="@string/vga"
+                    android:checkable="true"/>
+            </menu>
+        </item>
+
+        <item android:title="Info">
+            <menu>
+                <item
+                    android:id="@+id/nav_about"
+                    android:icon="@drawable/about"
+                    android:title="@string/about"
+                    android:checkable="true"/>
+                <item
+                    android:id="@+id/nav_version"
+                    android:icon="@drawable/version"
+                    android:title="@string/version"
+                    android:checkable="true"
+                    />
+            </menu>
+        </item>
+
+
+    </group>
+</menu>
