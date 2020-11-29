@@ -1,11 +1,13 @@
 package com.godsamix.hardware;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import com.squareup.picasso.Picasso;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -106,7 +109,11 @@ public class MainActivity extends AppCompatActivity {
 
 //update layout from sign in
         updateUI(account);
+
+
     }
+
+
     private void updateUI(@Nullable GoogleSignInAccount account) {
         if (account != null) {
             // Set the name in the nav head
