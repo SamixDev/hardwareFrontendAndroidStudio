@@ -1,9 +1,12 @@
 package com.godsamix.hardware;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +30,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -47,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView name;
     private TextView mail;
     private ImageView img;
+    private DrawerLayout drawer;
+    private NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         //updateUI(account);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+       drawer = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -80,11 +86,10 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_build, R.id.nav_board, R.id.nav_cpu,R.id.nav_version,R.id.nav_about,R.id.nav_vga)
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+   navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            //    .navigate(R.id.action_menu_to_version);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-
 
         // Set the dimensions of the sign-in button.
         signInButton = navigationView.getHeaderView(0).findViewById(R.id.sign_in_button);
@@ -112,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
     private void updateUI(@Nullable GoogleSignInAccount account) {
         if (account != null) {
