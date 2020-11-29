@@ -1,16 +1,12 @@
 package com.godsamix.hardware;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +23,7 @@ import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -53,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
     private ImageView img;
     private DrawerLayout drawer;
     private NavController navController;
+
+    //for google retrieve sign in info
+    String personName;
+    String personGivenName;
+    String personFamilyName;
+    String personEmail;
+    String personId;
+    Uri personPhoto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +115,9 @@ public class MainActivity extends AppCompatActivity {
 
 //update layout from sign in
         updateUI(account);
-
+        if (retrieveSignInInfo()){
+            Toast.makeText(getApplicationContext(),"Hello "+ personName,Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -190,5 +193,20 @@ if (account.getPhotoUrl() == null){
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    private boolean retrieveSignInInfo(){
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
+             personName = acct.getDisplayName();
+             personGivenName = acct.getGivenName();
+             personFamilyName = acct.getFamilyName();
+             personEmail = acct.getEmail();
+             personId = acct.getId();
+             personPhoto = acct.getPhotoUrl();
+            return true;
+        }
+        return false;
     }
 }
