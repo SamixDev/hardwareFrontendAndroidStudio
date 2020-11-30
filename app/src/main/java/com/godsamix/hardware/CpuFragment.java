@@ -6,15 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.godsamix.hardware.Helpers.CpuAdapter;
-import com.godsamix.hardware.Controllers.CpuController;
+import com.godsamix.hardware.Helpers.HardListAdapter;
+import com.godsamix.hardware.Controllers.HardListController;
 
 import com.godsamix.hardware.Helpers.RESTapis;
 import com.godsamix.hardware.Helpers.RetrofitService;
@@ -28,9 +27,9 @@ import retrofit2.Response;
 public class CpuFragment extends Fragment {
     private final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
-    private List<CpuController> users = new ArrayList<>();
-    private CpuAdapter usersAdapter;
-    private List<CpuController> movieList = new ArrayList<>();
+    private List<HardListController> viewlist = new ArrayList<>();
+    private HardListAdapter cpuAdapter;
+    private List<HardListController> cpuList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,41 +41,42 @@ public class CpuFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        usersAdapter = new CpuAdapter(getContext(), users);
-        recyclerView.setAdapter(usersAdapter);
+        cpuAdapter = new HardListAdapter(getContext(), viewlist);
+        recyclerView.setAdapter(cpuAdapter);
 
-        getUsers();
+        getCpus();
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(),"btn working",
                         Toast.LENGTH_LONG).show();
-                users.clear(); // clear list
-                usersAdapter.notifyDataSetChanged();
-                getUsers();
+                viewlist.clear(); // clear list
+                cpuAdapter.notifyDataSetChanged();
+                getCpus();
             }
         });
 
+
         return root;
     }
-    private void getUsers(){
+    private void getCpus(){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<List<CpuController>> call = RESTapis.getUsers();
-        call.enqueue(new Callback<List<CpuController>>() {
+        Call<List<HardListController>> call = RESTapis.getCpus();
+        call.enqueue(new Callback<List<HardListController>>() {
             @Override
-            public void onResponse(Call<List<CpuController>> call, Response<List<CpuController>> response) {
+            public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
                 if(response.isSuccessful()) {
-                    for(CpuController movie: response.body()){
-                        users.add(movie);
+                    for(HardListController procc: response.body()){
+                        viewlist.add(procc);
                     }
-                    usersAdapter.notifyDataSetChanged();
+                    cpuAdapter.notifyDataSetChanged();
                 }else{
                     Log.e(TAG, response.message());
                 }
             }
             @Override
-            public void onFailure(Call<List<CpuController>> call, Throwable t) {
+            public void onFailure(Call<List<HardListController>> call, Throwable t) {
                 Log.e(TAG, t.getMessage());
             }
         });

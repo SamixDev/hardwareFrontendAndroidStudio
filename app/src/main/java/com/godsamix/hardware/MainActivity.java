@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView img;
     private DrawerLayout drawer;
     private NavController navController;
-
+    private  Toolbar toolbar;
     //for google retrieve sign in info
     String personName;
     String personGivenName;
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     String personEmail;
     String personId;
     Uri personPhoto;
+    String idToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,22 +64,24 @@ public class MainActivity extends AppCompatActivity {
         name = navigationView.getHeaderView(0).findViewById(R.id.namenav);
         mail = navigationView.getHeaderView(0).findViewById(R.id.emailnav);
         img = navigationView.getHeaderView(0).findViewById(R.id.imagenav);
+        drawer = findViewById(R.id.drawer_layout);
+        toolbar = findViewById(R.id.toolbar);
 
 
-// Configure sign-in to request the user's ID, email address, and basic
-// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
-// Build a GoogleSignInClient with the options specified by gso.
+
+        // Build a GoogleSignInClient with the options specified by gso.
          mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         // Check for existing Google Sign In account, if the user is already signed in
-// the GoogleSignInAccount will be non-null.
+        // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         //updateUI(account);
 
-       drawer = findViewById(R.id.drawer_layout);
-        Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(null);
@@ -87,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_build, R.id.nav_board, R.id.nav_cpu,R.id.nav_version,R.id.nav_about,R.id.nav_vga)
                 .setOpenableLayout(drawer)
                 .build();
-   navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            //    .navigate(R.id.action_menu_to_version);
+
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
@@ -113,35 +116,45 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//update layout from sign in
-        updateUI(account);
-        if (retrieveSignInInfo()){
-            Toast.makeText(getApplicationContext(),"Hello "+ personName,Toast.LENGTH_SHORT).show();
-        }
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
+        googleSignInClient.silentSignIn().addOnCompleteListener(this, new OnCompleteListener<GoogleSignInAccount>() {
+            @Override
+            public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+                handleSignInResult(task);
 
+            }
+        });
+
+        //update layout from sign in
+        if (retrieveSignInInfo()){
+         //   Toast.makeText(getApplicationContext(),"Hello "+ personName,Toast.LENGTH_SHORT).show();
+        }else{
+
+        }
+        updateUI(account);
     }
 
     private void updateUI(@Nullable GoogleSignInAccount account) {
         if (account != null) {
             // Set the name in the nav head
              name.setText(account.getDisplayName());
-            mail.setText(account.getEmail());
+             mail.setText(account.getEmail());
           //  img.setImageURI(account.getPhotoUrl());
-if (account.getPhotoUrl() == null){
+             if (account.getPhotoUrl() == null){
 
-    img.setImageResource(R.drawable.profiledefault);
-}else{
-    Picasso.get().load(account.getPhotoUrl()).into(img);
-}
+              img.setImageResource(R.drawable.profiledefault);
+             }else{
+                Picasso.get().load(account.getPhotoUrl()).into(img);
+             }
 
-            signInButton.setVisibility(View.GONE);
-            signOutButton.setVisibility(View.VISIBLE);
+        signInButton.setVisibility(View.GONE);
+        signOutButton.setVisibility(View.VISIBLE);
         } else {
-            name.setText("");
-            mail.setText("");
-            img.setImageResource(R.drawable.profiledefault);
-            signInButton.setVisibility(View.VISIBLE);
-            signOutButton.setVisibility(View.GONE);
+         name.setText("");
+         mail.setText("");
+         img.setImageResource(R.drawable.profiledefault);
+         signInButton.setVisibility(View.VISIBLE);
+         signOutButton.setVisibility(View.GONE);
         }
     }
     @Override
@@ -162,7 +175,10 @@ if (account.getPhotoUrl() == null){
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-          //  Toast.makeText(getApplicationContext(),"Hello Javatpoint",Toast.LENGTH_SHORT).show();
+             idToken = account.getIdToken();
+
+
+         //   Toast.makeText(getApplicationContext(),"Hello "+ idToken,Toast.LENGTH_SHORT).show();
             // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {
@@ -181,6 +197,7 @@ if (account.getPhotoUrl() == null){
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         // [START_EXCLUDE]
+                        idToken = "";
                         updateUI(null);
                         // [END_EXCLUDE]
                     }
@@ -205,6 +222,7 @@ if (account.getPhotoUrl() == null){
              personEmail = acct.getEmail();
              personId = acct.getId();
              personPhoto = acct.getPhotoUrl();
+          //  idToken = acct.getIdToken();
             return true;
         }
         return false;
