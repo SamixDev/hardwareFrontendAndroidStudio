@@ -27,7 +27,7 @@ import retrofit2.Response;
 public class CpuFragment extends Fragment {
     private final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
-    private List<HardListController> users = new ArrayList<>();
+    private List<HardListController> viewlist = new ArrayList<>();
     private HardListAdapter cpuAdapter;
     private List<HardListController> cpuList = new ArrayList<>();
 
@@ -41,7 +41,7 @@ public class CpuFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        cpuAdapter = new HardListAdapter(getContext(), users);
+        cpuAdapter = new HardListAdapter(getContext(), viewlist);
         recyclerView.setAdapter(cpuAdapter);
 
         getCpus();
@@ -51,11 +51,12 @@ public class CpuFragment extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(getContext(),"btn working",
                         Toast.LENGTH_LONG).show();
-                users.clear(); // clear list
+                viewlist.clear(); // clear list
                 cpuAdapter.notifyDataSetChanged();
                 getCpus();
             }
         });
+
 
         return root;
     }
@@ -67,7 +68,7 @@ public class CpuFragment extends Fragment {
             public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
                 if(response.isSuccessful()) {
                     for(HardListController procc: response.body()){
-                        users.add(procc);
+                        viewlist.add(procc);
                     }
                     cpuAdapter.notifyDataSetChanged();
                 }else{

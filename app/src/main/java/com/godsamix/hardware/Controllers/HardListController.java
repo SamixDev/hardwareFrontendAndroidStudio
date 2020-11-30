@@ -11,6 +11,8 @@ public class HardListController {
     private  String Manufacturer;
     @SerializedName("ModelNb")
     private  String ModelNb;
+    @SerializedName("Image")
+    private  String image;
 
     public HardListController(String Code, String name, String Manufacturer, String ModelNb) {
         this.Code = Code;
@@ -53,4 +55,9 @@ public class HardListController {
     public String getModelNb() {
         return ModelNb;
     }
+
+    public String getImage() {
+        return image;
+    }
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RESTapis {
@@ -17,7 +18,7 @@ public interface RESTapis {
     @GET("hardware/cpuslist")
     Call<List<HardListController>> getCpus();
 
-    @GET("hardware/cpu/")
-    Call<List<HardListController>> getCpu(@Query("id") String cpuid);
+    @GET("hardware/cpu/{Code}")
+    Call<List<HardListController>> getOneCpu(@Path("Code") String Code);
 
 }
