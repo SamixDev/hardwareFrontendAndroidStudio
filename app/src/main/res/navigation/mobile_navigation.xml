@@ -15,19 +15,33 @@
         <action
             android:id="@+id/action_menu_to_about"
             app:destination="@id/nav_about"
+
 />
         <action
             android:id="@+id/action_menu_to_boardlist"
-            app:destination="@id/nav_board"
-   />
+            app:destination="@id/nav_cpu"
+            >
+            <argument
+                android:name="listType"
+                android:defaultValue="board" />
+        </action>
         <action
             android:id="@+id/action_menu_to_cpulist"
             app:destination="@id/nav_cpu"
-/>
+
+            >
+            <argument
+                android:name="listType"
+                android:defaultValue="cpu" />
+        </action>
         <action
             android:id="@+id/action_menu_to_vgalist"
-            app:destination="@id/nav_vga"
- />
+            app:destination="@id/nav_cpu"
+            app:launchSingleTop="true">
+            <argument
+                android:name="listType"
+                android:defaultValue="vga" />
+        </action>
         <action
             android:id="@+id/action_menu_to_build"
             app:destination="@id/nav_build"
@@ -39,24 +53,18 @@
         tools:layout="@layout/fragment_build" />
 
     <fragment
-        android:id="@+id/nav_board"
-        android:name="com.godsamix.hardware.BoardFragment"
-        tools:layout="@layout/fragment_board" />
-
-    <fragment
         android:id="@+id/nav_cpu"
-        android:name="com.godsamix.hardware.CpuFragment"
-        tools:layout="@layout/fragment_cpu" />
-    <fragment
-        android:id="@+id/nav_vga"
-        android:name="com.godsamix.hardware.VgaFragment"
-        tools:layout="@layout/fragment_vga" />
+        android:name="com.godsamix.hardware.hardwareItemsListFragment"
+        tools:layout="@layout/fragment_hardware_items_list" >
+        <argument
+            android:name="listType"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/nav_about"
         android:name="com.godsamix.hardware.AboutFragment"
         tools:layout="@layout/fragment_about" />
     <fragment
-
         android:id="@+id/nav_version"
         android:name="com.godsamix.hardware.VersionFragment"
         tools:layout="@layout/fragment_version" />

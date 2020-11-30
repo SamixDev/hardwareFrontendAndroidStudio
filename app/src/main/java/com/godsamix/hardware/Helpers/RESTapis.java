@@ -17,6 +17,10 @@ public interface RESTapis {
 
     @GET("hardware/cpuslist")
     Call<List<HardListController>> getCpus();
+    @GET("hardware/motherboardslist")
+    Call<List<HardListController>> getBoards();
+    @GET("hardware/vgaslist")
+    Call<List<HardListController>> getVgas();
 
     @GET("hardware/cpu/{Code}")
     Call<List<HardListController>> getOneCpu(@Path("Code") String Code);

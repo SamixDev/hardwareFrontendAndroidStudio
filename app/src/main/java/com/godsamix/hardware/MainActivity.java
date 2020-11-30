@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,7 +24,10 @@ import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.NavArgument;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -33,7 +37,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener{
 
     private static final int RC_SIGN_IN = 9001;
     private AppBarConfiguration mAppBarConfiguration;
@@ -94,6 +99,18 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        navigationView.setNavigationItemSelectedListener(this);
+//        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+//            @Override
+//            public void onDestinationChanged(@NonNull NavController controller,
+//                                             @NonNull NavDestination destination, @Nullable Bundle arguments) {
+//             //   Toast.makeText(getApplicationContext(),"destination "+destination.getId() , Toast.LENGTH_LONG).show();
+//              if  (destination.getId() == R.id.nav_cpu){
+//                  Toast.makeText(getApplicationContext(),"arrived " + controller.getNavigatorProvider(), Toast.LENGTH_LONG).show();
+//
+//              }
+//            }
+//        });
 
         // Set the dimensions of the sign-in button.
         signInButton = navigationView.getHeaderView(0).findViewById(R.id.sign_in_button);
@@ -132,6 +149,49 @@ public class MainActivity extends AppCompatActivity {
 
         }
         updateUI(account);
+    }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        menuItem.setChecked(true);
+
+        drawer.closeDrawers();
+
+        int id = menuItem.getItemId();
+        Bundle bundle = new Bundle();
+        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.nav_cpu, true).build();
+        switch (id) {
+
+            case R.id.nav_cpu:
+               // navController.navigate(R.id.firstFragment);
+              //  navController.popBackStack(R.id.nav_host_fragment, true);
+
+                bundle.putString("listType", "cpu");
+                navController.navigate(R.id.nav_cpu,bundle,navOptions);
+                break;
+            case R.id.nav_board:
+                // navController.navigate(R.id.firstFragment);
+               // navController.popBackStack(R.id.nav_host_fragment, true);
+                bundle.putString("listType", "board");
+                navController.navigate(R.id.nav_cpu,bundle,navOptions);
+                break;
+            case R.id.nav_vga:
+                // navController.navigate(R.id.firstFragment);
+                bundle.putString("listType", "vga");
+                navController.navigate(R.id.nav_cpu,bundle,navOptions);
+                break;
+
+            case R.id.nav_about:
+                navController.navigate(R.id.nav_about);
+                break;
+
+            case R.id.nav_version:
+                navController.navigate(R.id.nav_version);
+                break;
+
+        }
+        return true;
+
     }
 
     private void updateUI(@Nullable GoogleSignInAccount account) {

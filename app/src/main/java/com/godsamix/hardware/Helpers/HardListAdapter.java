@@ -65,7 +65,7 @@ public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cpu_list, parent, false);
+                .inflate(R.layout.hardware_list, parent, false);
         return new ViewHolder(itemView);
     }
 
