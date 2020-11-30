@@ -28,7 +28,8 @@
                     android:id="@+id/nav_cpu"
                     android:icon="@drawable/cpu"
                     android:title="@string/cpu"
-                    android:checkable="true"/>
+                    android:checkable="true"
+                    />
                 <item
                     android:id="@+id/nav_vga"
                     android:icon="@drawable/vga"
