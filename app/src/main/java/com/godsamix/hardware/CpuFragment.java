@@ -45,7 +45,7 @@ public class CpuFragment extends Fragment {
         usersAdapter = new CpuAdapter(getContext(), users);
         recyclerView.setAdapter(usersAdapter);
 
-        getUsers();
+        getCpus();
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,15 +54,15 @@ public class CpuFragment extends Fragment {
                         Toast.LENGTH_LONG).show();
                 users.clear(); // clear list
                 usersAdapter.notifyDataSetChanged();
-                getUsers();
+                getCpus();
             }
         });
 
         return root;
     }
-    private void getUsers(){
+    private void getCpus(){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<List<CpuController>> call = RESTapis.getUsers();
+        Call<List<CpuController>> call = RESTapis.getCpus();
         call.enqueue(new Callback<List<CpuController>>() {
             @Override
             public void onResponse(Call<List<CpuController>> call, Response<List<CpuController>> response) {

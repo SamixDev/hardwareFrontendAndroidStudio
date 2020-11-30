@@ -3,54 +3,54 @@ package com.godsamix.hardware.Controllers;
 import com.google.gson.annotations.SerializedName;
 
 public class CpuController{
-    @SerializedName("id")
-    private  String id;
-    @SerializedName("name")
+    @SerializedName("Code")
+    private  String Code;
+    @SerializedName("Name")
     private  String name;
-    @SerializedName("email")
-    private  String email;
-    @SerializedName("gender")
-    private  String gender;
+    @SerializedName("Manufacturer")
+    private  String Manufacturer;
+    @SerializedName("ModelNb")
+    private  String ModelNb;
 
-    public CpuController(String id, String name, String email, String gender) {
-        this.id = id;
+    public CpuController(String Code, String name, String Manufacturer, String ModelNb) {
+        this.Code = Code;
         this.name = name;
-        this.email = email;
-        this.gender = gender;
+        this.Manufacturer = Manufacturer;
+        this.ModelNb = ModelNb;
     }
 
     public CpuController() {
 
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCode(String Code) {
+        this.Code = Code;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setManufacturer(String Manufacturer) {
+        this.Manufacturer = Manufacturer;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setModelNb(String ModelNb) {
+        this.ModelNb = ModelNb;
     }
-    public String getId() {
-        return id;
+    public String getCode() {
+        return Code;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getManufacturer() {
+        return Manufacturer;
     }
 
-    public String getGender() {
-        return gender;
+    public String getModelNb() {
+        return ModelNb;
     }
 }

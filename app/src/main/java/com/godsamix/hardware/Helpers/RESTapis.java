@@ -14,8 +14,8 @@ public interface RESTapis {
     @GET(".")
      Call<List<CpuController>> getUsers();
 
-    @GET("cpulist")
-    Call<List<CpuController>> getAllCpu();
+    @GET("hardware/cpuslist")
+    Call<List<CpuController>> getCpus();
 
     @GET("cpu")
     Call<List<CpuController>> getCpu(@Query("id") String cpuid);
