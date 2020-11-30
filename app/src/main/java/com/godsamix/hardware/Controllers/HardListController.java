@@ -2,7 +2,7 @@ package com.godsamix.hardware.Controllers;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CpuController{
+public class HardListController {
     @SerializedName("Code")
     private  String Code;
     @SerializedName("Name")
@@ -12,32 +12,32 @@ public class CpuController{
     @SerializedName("ModelNb")
     private  String ModelNb;
 
-    public CpuController(String Code, String name, String Manufacturer, String ModelNb) {
+    public HardListController(String Code, String name, String Manufacturer, String ModelNb) {
         this.Code = Code;
         this.name = name;
         this.Manufacturer = Manufacturer;
         this.ModelNb = ModelNb;
     }
 
-    public CpuController() {
+    public HardListController() {
 
     }
 
-    public void setCode(String Code) {
-        this.Code = Code;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
-    }
-
-    public void setModelNb(String ModelNb) {
-        this.ModelNb = ModelNb;
-    }
+//    public void setCode(String Code) {
+//        this.Code = Code;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public void setManufacturer(String Manufacturer) {
+//        this.Manufacturer = Manufacturer;
+//    }
+//
+//    public void setModelNb(String ModelNb) {
+//        this.ModelNb = ModelNb;
+//    }
     public String getCode() {
         return Code;
     }

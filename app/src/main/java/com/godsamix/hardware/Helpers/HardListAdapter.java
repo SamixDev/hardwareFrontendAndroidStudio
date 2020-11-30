@@ -6,15 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.godsamix.hardware.Controllers.CpuController;
+import com.godsamix.hardware.Controllers.HardListController;
 import com.godsamix.hardware.R;
 import java.util.List;
 
-public class CpuAdapter extends RecyclerView.Adapter<CpuAdapter.ViewHolder> {
-    private List<CpuController> cpus;
+public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHolder> {
+    private List<HardListController> cpus;
     private Context context;
 
-    public CpuAdapter(Context context, List<CpuController> processors){
+    public HardListAdapter(Context context, List<HardListController> processors){
         this.cpus = processors;
         this.context = context;
     }
@@ -32,7 +32,7 @@ public class CpuAdapter extends RecyclerView.Adapter<CpuAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CpuController user = cpus.get(position);
+        HardListController user = cpus.get(position);
         holder.code.setText(user.getCode());
         holder.name.setText(user.getName());
         holder.manuf.setText(user.getManufacturer());
