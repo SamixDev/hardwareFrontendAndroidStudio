@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements
     private DrawerLayout drawer;
     private NavController navController;
     private  Toolbar toolbar;
+
     //for google retrieve sign in info
     String personName;
     String personGivenName;
@@ -65,13 +66,11 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navigationView = findViewById(R.id.nav_view);
-
         name = navigationView.getHeaderView(0).findViewById(R.id.namenav);
         mail = navigationView.getHeaderView(0).findViewById(R.id.emailnav);
         img = navigationView.getHeaderView(0).findViewById(R.id.imagenav);
         drawer = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
-
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -85,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-        //updateUI(account);
-
 
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(null);
@@ -100,17 +97,6 @@ public class MainActivity extends AppCompatActivity implements
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         navigationView.setNavigationItemSelectedListener(this);
-//        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-//            @Override
-//            public void onDestinationChanged(@NonNull NavController controller,
-//                                             @NonNull NavDestination destination, @Nullable Bundle arguments) {
-//             //   Toast.makeText(getApplicationContext(),"destination "+destination.getId() , Toast.LENGTH_LONG).show();
-//              if  (destination.getId() == R.id.nav_cpu){
-//                  Toast.makeText(getApplicationContext(),"arrived " + controller.getNavigatorProvider(), Toast.LENGTH_LONG).show();
-//
-//              }
-//            }
-//        });
 
         // Set the dimensions of the sign-in button.
         signInButton = navigationView.getHeaderView(0).findViewById(R.id.sign_in_button);
@@ -132,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-
         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
         googleSignInClient.silentSignIn().addOnCompleteListener(this, new OnCompleteListener<GoogleSignInAccount>() {
             @Override
@@ -144,67 +129,52 @@ public class MainActivity extends AppCompatActivity implements
 
         //update layout from sign in
         if (retrieveSignInInfo()){
-         //   Toast.makeText(getApplicationContext(),"Hello "+ personName,Toast.LENGTH_SHORT).show();
         }else{
-
         }
         updateUI(account);
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
         menuItem.setChecked(true);
-
         drawer.closeDrawers();
-
         int id = menuItem.getItemId();
         Bundle bundle = new Bundle();
         NavOptions navOptionshardware = new NavOptions.Builder().setPopUpTo(R.id.nav_cpu, true)
                 .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
                 .build();
-        NavOptions navOptionsversion = new NavOptions.Builder().setPopUpTo(R.id.nav_version, true)
-                .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
-                .build();
-        NavOptions navOptionsabout = new NavOptions.Builder().setPopUpTo(R.id.nav_about, true)
-                .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
-                .build();
-        NavOptions navOptionsbuild = new NavOptions.Builder().setPopUpTo(R.id.nav_build, true)
-                .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
-                .build();
         switch (id) {
-
             case R.id.nav_cpu:
-               // navController.navigate(R.id.firstFragment);
-              //  navController.popBackStack(R.id.nav_host_fragment, true);
-
                 bundle.putString("listType", "cpu");
                 navController.navigate(R.id.nav_cpu,bundle,navOptionshardware);
                 break;
             case R.id.nav_board:
-                // navController.navigate(R.id.firstFragment);
-               // navController.popBackStack(R.id.nav_host_fragment, true);
                 bundle.putString("listType", "board");
                 navController.navigate(R.id.nav_cpu,bundle,navOptionshardware);
                 break;
             case R.id.nav_vga:
-                // navController.navigate(R.id.firstFragment);
                 bundle.putString("listType", "vga");
                 navController.navigate(R.id.nav_cpu,bundle,navOptionshardware);
                 break;
-
             case R.id.nav_about:
+                NavOptions navOptionsabout = new NavOptions.Builder().setPopUpTo(R.id.nav_about, true)
+                        .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
+                        .build();
                 navController.navigate(R.id.nav_about,bundle,navOptionsabout);
                 break;
-
             case R.id.nav_version:
+                NavOptions navOptionsversion = new NavOptions.Builder().setPopUpTo(R.id.nav_version, true)
+                        .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
+                        .build();
                 navController.navigate(R.id.nav_version,bundle,navOptionsversion);
                 break;
             case R.id.nav_build:
+                NavOptions navOptionsbuild = new NavOptions.Builder().setPopUpTo(R.id.nav_build, true)
+                        .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
+                        .build();
                 navController.navigate(R.id.nav_build,bundle,navOptionsbuild);
                 break;
         }
         return true;
-
     }
 
     private void updateUI(@Nullable GoogleSignInAccount account) {
@@ -212,9 +182,7 @@ public class MainActivity extends AppCompatActivity implements
             // Set the name in the nav head
              name.setText(account.getDisplayName());
              mail.setText(account.getEmail());
-          //  img.setImageURI(account.getPhotoUrl());
              if (account.getPhotoUrl() == null){
-
               img.setImageResource(R.drawable.profiledefault);
              }else{
                 Picasso.get().load(account.getPhotoUrl()).into(img);
@@ -230,10 +198,10 @@ public class MainActivity extends AppCompatActivity implements
          signOutButton.setVisibility(View.GONE);
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
@@ -249,9 +217,6 @@ public class MainActivity extends AppCompatActivity implements
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
              idToken = account.getIdToken();
-
-
-         //   Toast.makeText(getApplicationContext(),"Hello "+ idToken,Toast.LENGTH_SHORT).show();
             // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {
@@ -286,7 +251,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private boolean retrieveSignInInfo(){
-
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
              personName = acct.getDisplayName();

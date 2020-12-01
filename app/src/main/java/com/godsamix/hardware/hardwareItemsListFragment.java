@@ -34,14 +34,11 @@ public class hardwareItemsListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hardware_items_list, container, false);
-
-       //  final TextView textView = root.findViewById(R.id.test);
         final Button btn = root.findViewById(R.id.buttontest);
         recyclerView = root.findViewById(R.id.recyclerview);
         String args = this.getArguments().getString("listType");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-
         cpuAdapter = new HardListAdapter(getContext(), viewlist);
         recyclerView.setAdapter(cpuAdapter);
         switch(args) {
@@ -56,7 +53,6 @@ public class hardwareItemsListFragment extends Fragment {
                 break;
         }
 
-
 //        btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -67,7 +63,6 @@ public class hardwareItemsListFragment extends Fragment {
 //                getCpus();
 //            }
 //        });
-
 
         return root;
     }
