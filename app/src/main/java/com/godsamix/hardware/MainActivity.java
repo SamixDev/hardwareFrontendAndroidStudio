@@ -159,7 +159,18 @@ public class MainActivity extends AppCompatActivity implements
 
         int id = menuItem.getItemId();
         Bundle bundle = new Bundle();
-        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.nav_cpu, true).build();
+        NavOptions navOptionshardware = new NavOptions.Builder().setPopUpTo(R.id.nav_cpu, true)
+                .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
+                .build();
+        NavOptions navOptionsversion = new NavOptions.Builder().setPopUpTo(R.id.nav_version, true)
+                .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
+                .build();
+        NavOptions navOptionsabout = new NavOptions.Builder().setPopUpTo(R.id.nav_about, true)
+                .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
+                .build();
+        NavOptions navOptionsbuild = new NavOptions.Builder().setPopUpTo(R.id.nav_build, true)
+                .setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right)
+                .build();
         switch (id) {
 
             case R.id.nav_cpu:
@@ -167,28 +178,30 @@ public class MainActivity extends AppCompatActivity implements
               //  navController.popBackStack(R.id.nav_host_fragment, true);
 
                 bundle.putString("listType", "cpu");
-                navController.navigate(R.id.nav_cpu,bundle,navOptions);
+                navController.navigate(R.id.nav_cpu,bundle,navOptionshardware);
                 break;
             case R.id.nav_board:
                 // navController.navigate(R.id.firstFragment);
                // navController.popBackStack(R.id.nav_host_fragment, true);
                 bundle.putString("listType", "board");
-                navController.navigate(R.id.nav_cpu,bundle,navOptions);
+                navController.navigate(R.id.nav_cpu,bundle,navOptionshardware);
                 break;
             case R.id.nav_vga:
                 // navController.navigate(R.id.firstFragment);
                 bundle.putString("listType", "vga");
-                navController.navigate(R.id.nav_cpu,bundle,navOptions);
+                navController.navigate(R.id.nav_cpu,bundle,navOptionshardware);
                 break;
 
             case R.id.nav_about:
-                navController.navigate(R.id.nav_about);
+                navController.navigate(R.id.nav_about,bundle,navOptionsabout);
                 break;
 
             case R.id.nav_version:
-                navController.navigate(R.id.nav_version);
+                navController.navigate(R.id.nav_version,bundle,navOptionsversion);
                 break;
-
+            case R.id.nav_build:
+                navController.navigate(R.id.nav_build,bundle,navOptionsbuild);
+                break;
         }
         return true;
 
