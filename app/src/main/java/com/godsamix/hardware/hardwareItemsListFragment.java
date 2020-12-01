@@ -106,11 +106,11 @@ public class hardwareItemsListFragment extends Fragment {
                                     pagenumber += pagesize ;
                                     break;
                                 case "vga":
-                                    getVgas(pagenumber,pagesize);
+                                    getVgasSearch(searchableText,pagenumber,pagesize);
                                     pagenumber += pagesize ;
                                     break;
                                 case "board":
-                                    getBoards(pagenumber,pagesize);
+                                    getBoardsSearch(searchableText,pagenumber,pagesize);
                                     pagenumber += pagesize ;
                                     break;
                             }
@@ -166,11 +166,11 @@ public class hardwareItemsListFragment extends Fragment {
                             pagenumber += pagesize ;
                             break;
                         case "vga":
-                            getVgas(pagenumber,pagesize);
+                            getVgasSearch(searchableText,pagenumber,pagesize);
                             pagenumber += pagesize ;
                             break;
                         case "board":
-                            getBoards(pagenumber,pagesize);
+                            getBoardsSearch(searchableText,pagenumber,pagesize);
                             pagenumber += pagesize ;
                             break;
                     }
@@ -184,6 +184,62 @@ public class hardwareItemsListFragment extends Fragment {
     private void getCpusSearch(String txt, int pagenumber, int pagesize){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
         Call<List<HardListController>> call = RESTapis.getCpusSearch(txt,pagenumber,pagesize);
+        call.enqueue(new Callback<List<HardListController>>() {
+            @Override
+            public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
+                if(response.isSuccessful()) {
+                    for(HardListController procc: response.body()){
+                        viewlist.add(procc);
+                        itemscount = viewlist.size();
+
+                    }
+                    hardAdapter.notifyDataSetChanged();
+                }else{
+                    Log.e(TAG, response.message());
+                }
+                if (itemscount == itemscountprevious){
+                    endresults = true;
+                }else{
+                    itemscountprevious = itemscount;
+                }
+            }
+            @Override
+            public void onFailure(Call<List<HardListController>> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
+    private void getBoardsSearch(String txt, int pagenumber, int pagesize){
+        RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
+        Call<List<HardListController>> call = RESTapis.getBoardsSearch(txt,pagenumber,pagesize);
+        call.enqueue(new Callback<List<HardListController>>() {
+            @Override
+            public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
+                if(response.isSuccessful()) {
+                    for(HardListController procc: response.body()){
+                        viewlist.add(procc);
+                        itemscount = viewlist.size();
+
+                    }
+                    hardAdapter.notifyDataSetChanged();
+                }else{
+                    Log.e(TAG, response.message());
+                }
+                if (itemscount == itemscountprevious){
+                    endresults = true;
+                }else{
+                    itemscountprevious = itemscount;
+                }
+            }
+            @Override
+            public void onFailure(Call<List<HardListController>> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
+    private void getVgasSearch(String txt, int pagenumber, int pagesize){
+        RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
+        Call<List<HardListController>> call = RESTapis.getVgasSearch(txt,pagenumber,pagesize);
         call.enqueue(new Callback<List<HardListController>>() {
             @Override
             public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
