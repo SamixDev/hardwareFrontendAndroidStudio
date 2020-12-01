@@ -37,11 +37,12 @@ public class hardwareItemsListFragment extends Fragment {
     public static String args;
     public boolean endresults = false;
     public int pagenumber = 0;
-    public int pagesize = 10;
+    public int pagesize = 5;
     public int itemscount =1;
     public int itemscountprevious =0;
     public ImageView searchBtn;
     public TextInputEditText txtToSearch;
+    public String searchableText;
     public boolean isSearch = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -81,9 +82,8 @@ public class hardwareItemsListFragment extends Fragment {
                     if(linearLayoutManager.findLastCompletelyVisibleItemPosition() == viewlist.size() - 1)
                     {
                         hardAdapter.notifyDataSetChanged();
-                        if (isSearch){
-
-                        }else {
+                        if (!isSearch){
+                      //      Toast.makeText(getContext(), "no txt ",Toast.LENGTH_SHORT).show();
                             switch (args) {
                                 case "cpu":
                                     getCpus(pagenumber, pagesize);
@@ -98,6 +98,22 @@ public class hardwareItemsListFragment extends Fragment {
                                     pagenumber += pagesize;
                                     break;
                             }
+                        }else {
+                       //     Toast.makeText(getContext(), "txt is " + searchableText,Toast.LENGTH_SHORT).show();
+                            switch(args) {
+                                case "cpu":
+                                    getCpusSearch(searchableText,pagenumber,pagesize);
+                                    pagenumber += pagesize ;
+                                    break;
+                                case "vga":
+                                    getVgas(pagenumber,pagesize);
+                                    pagenumber += pagesize ;
+                                    break;
+                                case "board":
+                                    getBoards(pagenumber,pagesize);
+                                    pagenumber += pagesize ;
+                                    break;
+                            }
                         }
                     }
                 }
@@ -107,15 +123,18 @@ public class hardwareItemsListFragment extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   Toast.makeText(getContext(), "txt is " + txtToSearch.getText(),Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getContext(), "searching for  " + txtToSearch.getText(),Toast.LENGTH_SHORT).show();
                 if (TextUtils.isEmpty(txtToSearch.getText().toString())) {
+                //    Toast.makeText(getContext(), "empty ",Toast.LENGTH_SHORT).show();
                     isSearch = false;
                     viewlist.clear(); // clear list
-                    hardAdapter.notifyDataSetChanged();
                     pagenumber = 0;
-                    pagesize = 10;
+                    pagesize = 5;
                     itemscount =1;
                     itemscountprevious =0;
+                    searchableText = "";
+                    endresults = false;
+                    hardAdapter.notifyDataSetChanged();
                     switch(args) {
                         case "cpu":
                             getCpus(pagenumber,pagesize);
@@ -133,15 +152,17 @@ public class hardwareItemsListFragment extends Fragment {
                 }else{
                     isSearch = true;
                     viewlist.clear(); // clear list
-                    hardAdapter.notifyDataSetChanged();
                     pagenumber = 0;
-                   pagesize = 10;
+                   pagesize = 5;
                   itemscount =1;
                    itemscountprevious =0;
-                 //   Toast.makeText(getContext(), "not empty",Toast.LENGTH_SHORT).show();
+                    endresults = false;
+                    searchableText = txtToSearch.getText().toString();
+                    hardAdapter.notifyDataSetChanged();
+              //      Toast.makeText(getContext(), "not empty",Toast.LENGTH_SHORT).show();
                     switch(args) {
                         case "cpu":
-                            getCpusSearch(txtToSearch.getText().toString(),pagenumber,pagesize);
+                            getCpusSearch(searchableText,pagenumber,pagesize);
                             pagenumber += pagesize ;
                             break;
                         case "vga":
