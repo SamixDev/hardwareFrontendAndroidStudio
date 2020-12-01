@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">hardware</string>
+    <string name="app_name">Hardware Mate</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -14,6 +14,9 @@
     <string name="version">Version Info</string>
     <string name="vga">VGA List</string>
     <string name="about">About</string>
+
+    <string name="privacypolicy"><u>Privacy Policy</u></string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

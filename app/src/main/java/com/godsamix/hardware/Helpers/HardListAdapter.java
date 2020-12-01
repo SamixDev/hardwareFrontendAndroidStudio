@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.recyclerview.widget.RecyclerView;
 import com.godsamix.hardware.Controllers.HardListController;
 import com.godsamix.hardware.R;
@@ -18,6 +17,7 @@ import java.util.List;
 public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHolder> {
     private List<HardListController> hard;
     private Context context;
+
 
     public HardListAdapter(Context context, List<HardListController> hardware){
         this.hard = hardware;
@@ -36,49 +36,35 @@ public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHo
         }
     }
 
-
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HardListController lst = hard.get(position);
         holder.code.setText(lst.getCode());
         holder.name.setText(lst.getName());
         holder.manuf.setText(lst.getManufacturer());
-        //https://www.amd.com/system/files/styles/992px/private/2020-09/616656-amd-ryzen-5-5000-series-PIB-fan-1260x709.png?itok=g0FNgeyd
-       // Toast.makeText(context,"img : "+getItemCount(),Toast.LENGTH_SHORT).show();
-      //  Toast.makeText(context,"type : "+hardwareItemsListFragment.args,Toast.LENGTH_LONG).show();
-        if (lst.getImage() != null){
-         //   String imageurl = lst.getImage();
 
+        if (lst.getImage() != null){
             Picasso.get().load(lst.getImage()).into(holder.img);
         }else{
-
             if(hardwareItemsListFragment.args.equals( "cpu")){
-               // Toast.makeText(context,"type : "+hardwareItemsListFragment.args,Toast.LENGTH_SHORT).show();
                 holder.img.setImageResource(R.drawable.cpuempty);
             }else if(hardwareItemsListFragment.args.equals( "vga")){
-                // Toast.makeText(context,"type : "+hardwareItemsListFragment.args,Toast.LENGTH_SHORT).show();
                 holder.img.setImageResource(R.drawable.vgaempty);
             }else if(hardwareItemsListFragment.args.equals( "board")){
-                // Toast.makeText(context,"type : "+hardwareItemsListFragment.args,Toast.LENGTH_SHORT).show();
                 holder.img.setImageResource(R.drawable.boardempty);
             }
-
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  Toast.makeText(context,"Position : "+holder.code.getText(),Toast.LENGTH_LONG).show();
                 Toast.makeText(context,"item : "+lst.getCode() + " "+ lst.getName()+ " "+ lst.getImage(),Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.hardware_list, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.hardware_list, parent, false);
         return new ViewHolder(itemView);
     }
 

@@ -22,6 +22,13 @@ public interface RESTapis {
     @GET("hardware/vgaslist")
     Call<List<HardListController>> getVgas(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize);
 
+    @GET("hardware/cpusearch/{name}")
+    Call<List<HardListController>> getCpusSearch(@Path("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize);
+    @GET("hardware/boardsearch/{name}")
+    Call<List<HardListController>> getBoardsSearch(@Path("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize);
+    @GET("hardware/vgasearch/{name}")
+    Call<List<HardListController>> getVgasSearch(@Path("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize);
+
     @GET("hardware/cpu/{Code}")
     Call<List<HardListController>> getOneCpu(@Path("Code") String Code);
 
