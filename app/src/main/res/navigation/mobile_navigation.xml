@@ -11,15 +11,27 @@
         <action
             android:id="@+id/action_menu_to_version"
             app:destination="@id/nav_version"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
     />
         <action
             android:id="@+id/action_menu_to_about"
             app:destination="@id/nav_about"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
 
 />
         <action
             android:id="@+id/action_menu_to_boardlist"
             app:destination="@id/nav_cpu"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             >
             <argument
                 android:name="listType"
@@ -28,7 +40,10 @@
         <action
             android:id="@+id/action_menu_to_cpulist"
             app:destination="@id/nav_cpu"
-
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             >
             <argument
                 android:name="listType"
@@ -37,7 +52,10 @@
         <action
             android:id="@+id/action_menu_to_vgalist"
             app:destination="@id/nav_cpu"
-            app:launchSingleTop="true">
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left">
             <argument
                 android:name="listType"
                 android:defaultValue="vga" />
@@ -45,6 +63,10 @@
         <action
             android:id="@+id/action_menu_to_build"
             app:destination="@id/nav_build"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
   />
     </fragment>
     <fragment

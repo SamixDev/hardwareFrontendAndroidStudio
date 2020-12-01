@@ -16,11 +16,11 @@ public interface RESTapis {
   //   Call<List<HardListController>> getUsers();
 
     @GET("hardware/cpuslist")
-    Call<List<HardListController>> getCpus();
+    Call<List<HardListController>> getCpus(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize);
     @GET("hardware/motherboardslist")
-    Call<List<HardListController>> getBoards();
+    Call<List<HardListController>> getBoards(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize);
     @GET("hardware/vgaslist")
-    Call<List<HardListController>> getVgas();
+    Call<List<HardListController>> getVgas(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize);
 
     @GET("hardware/cpu/{Code}")
     Call<List<HardListController>> getOneCpu(@Path("Code") String Code);
