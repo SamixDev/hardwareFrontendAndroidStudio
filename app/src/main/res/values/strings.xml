@@ -15,6 +15,9 @@
     <string name="vga">VGA List</string>
     <string name="about">About</string>
 
+
+    <string name="copy_right" translatable="false">Copyrights © %1$d</string>
+
     <string name="privacypolicy"><u>Privacy Policy</u></string>
 
     <!-- TODO: Remove or change this placeholder text -->
