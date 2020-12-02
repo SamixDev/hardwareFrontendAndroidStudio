@@ -31,16 +31,13 @@ public class AboutFragment extends Fragment {
 
        // View root = inflater.inflate(R.layout.fragment_about, container, false);
 
-        Element adsElement = new Element();
-        adsElement.setTitle("Advertise with us");
-
         View aboutPage = new AboutPage(getContext())
                 .isRTL(false)
                 .enableDarkMode(false)
+                .setDescription(getString(R.string.app_desc))
  //               .setCustomFont(String) // or Typeface
                 .setImage(R.drawable.pc)
  //               .addItem(versionElement)
- //               .addItem(adsElement)
                 .addGroup("Connect with us")
                 .addEmail("samer.hd.ah@gmail.com","Contact me")
                 .addWebsite("https://www.linkedin.com/in/samer-dev","Connect with me on LinkedIn")
@@ -49,7 +46,7 @@ public class AboutFragment extends Fragment {
  //               .addYoutube("")
                 .addPlayStore("https://play.google.com/store/apps/developer?id=Samix","Rate me on the play store")
                 .addGitHub("SamixDev","Fork me on GitHub")
-              //  .addInstagram("medyo80")
+ //               .addInstagram("medyo80")
                 .addItem(getCopyRightsElement())
                 .create();
 
