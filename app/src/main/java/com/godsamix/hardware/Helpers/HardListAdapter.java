@@ -66,19 +66,22 @@ public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHo
                 context.getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_hardware_specs, null);
 
+
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         boolean focusable = true; // lets taps outside the popup also dismiss it
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            popupWindow.setElevation(20);
-        }
+        popupWindow.setElevation(20);
         TextView txt = popupView.findViewById(R.id.popmsg);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        // inflate linearlayout in the popview
+        LinearLayout linear = popupView.findViewById(R.id.linearlay);
+        TextView textView = new TextView(context);
+        textView.setText(holder.name.getText());
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                linear.addView(textView);
             txt.setText(holder.code.getText());
                 // show the popup window
                 // which view you pass in doesn't matter, it is only used for the window tolken
