@@ -3,11 +3,14 @@ package com.godsamix.hardware;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +30,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class hardwareItemsListFragment extends Fragment {
 
@@ -48,6 +53,18 @@ public class hardwareItemsListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hardware_items_list, container, false);
+
+//        // inflate the layout of the popup window
+//        LayoutInflater inflater_popup = (LayoutInflater)
+//                getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
+//        View popupView = inflater.inflate(R.layout.popup_hardware_specs, null);
+
+//        // create the popup window
+//        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//        boolean focusable = true; // lets taps outside the popup also dismiss it
+//        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//
 
         searchBtn = root.findViewById(R.id.searchbutton);
         txtToSearch = root.findViewById(R.id.searchinput);
@@ -178,6 +195,9 @@ public class hardwareItemsListFragment extends Fragment {
 
             }
         });
+
+
+
 
         return root;
     }

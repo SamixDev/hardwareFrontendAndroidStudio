@@ -15,6 +15,9 @@
     <string name="vga">VGA List</string>
     <string name="about">About</string>
 
+    <string name="app_desc">Build your custom computer setup \nFind and inspect the hardware you chose \nKeep track about new hardware releases \nAnd much more!</string>
+    <string name="copy_right" translatable="false">Copyrights © %1$d</string>
+
     <string name="privacypolicy"><u>Privacy Policy</u></string>
 
     <!-- TODO: Remove or change this placeholder text -->
