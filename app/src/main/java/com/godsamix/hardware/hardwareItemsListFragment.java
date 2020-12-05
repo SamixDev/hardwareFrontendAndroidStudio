@@ -120,8 +120,6 @@ public class hardwareItemsListFragment extends Fragment {
         });
 
 
-
-
         return root;
     }
     private void getHardSearch(String txt, int pagenumber, int pagesize,String Type){
