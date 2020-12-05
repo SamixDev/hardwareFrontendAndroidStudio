@@ -54,18 +54,6 @@ public class hardwareItemsListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hardware_items_list, container, false);
 
-//        // inflate the layout of the popup window
-//        LayoutInflater inflater_popup = (LayoutInflater)
-//                getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
-//        View popupView = inflater.inflate(R.layout.popup_hardware_specs, null);
-
-//        // create the popup window
-//        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-//        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//        boolean focusable = true; // lets taps outside the popup also dismiss it
-//        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-//
-
         searchBtn = root.findViewById(R.id.searchbutton);
         txtToSearch = root.findViewById(R.id.searchinput);
 
@@ -75,20 +63,8 @@ public class hardwareItemsListFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         hardAdapter = new HardListAdapter(getContext(), viewlist);
         recyclerView.setAdapter(hardAdapter);
-        switch(args) {
-            case "cpu":
-                getCpus(pagenumber,pagesize);
-                pagenumber += pagesize ;
-                break;
-            case "vga":
-                getVgas(pagenumber,pagesize);
-                pagenumber += pagesize ;
-                break;
-            case "board":
-                getBoards(pagenumber,pagesize);
-                pagenumber += pagesize ;
-                break;
-        }
+        getHard(pagenumber, pagesize,args);
+        pagenumber += pagesize ;
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
@@ -100,37 +76,11 @@ public class hardwareItemsListFragment extends Fragment {
                     {
                         hardAdapter.notifyDataSetChanged();
                         if (!isSearch){
-                      //      Toast.makeText(getContext(), "no txt ",Toast.LENGTH_SHORT).show();
-                            switch (args) {
-                                case "cpu":
-                                    getCpus(pagenumber, pagesize);
-                                    pagenumber += pagesize;
-                                    break;
-                                case "vga":
-                                    getVgas(pagenumber, pagesize);
-                                    pagenumber += pagesize;
-                                    break;
-                                case "board":
-                                    getBoards(pagenumber, pagesize);
-                                    pagenumber += pagesize;
-                                    break;
-                            }
+                            getHard(pagenumber, pagesize,args);
+                            pagenumber += pagesize;
                         }else {
-                       //     Toast.makeText(getContext(), "txt is " + searchableText,Toast.LENGTH_SHORT).show();
-                            switch(args) {
-                                case "cpu":
-                                    getCpusSearch(searchableText,pagenumber,pagesize);
-                                    pagenumber += pagesize ;
-                                    break;
-                                case "vga":
-                                    getVgasSearch(searchableText,pagenumber,pagesize);
-                                    pagenumber += pagesize ;
-                                    break;
-                                case "board":
-                                    getBoardsSearch(searchableText,pagenumber,pagesize);
-                                    pagenumber += pagesize ;
-                                    break;
-                            }
+                            getHardSearch(searchableText,pagenumber,pagesize,args);
+                            pagenumber += pagesize ;
                         }
                     }
                 }
@@ -140,9 +90,7 @@ public class hardwareItemsListFragment extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  Toast.makeText(getContext(), "searching for  " + txtToSearch.getText(),Toast.LENGTH_SHORT).show();
                 if (TextUtils.isEmpty(txtToSearch.getText().toString())) {
-                //    Toast.makeText(getContext(), "empty ",Toast.LENGTH_SHORT).show();
                     isSearch = false;
                     viewlist.clear(); // clear list
                     pagenumber = 0;
@@ -152,20 +100,8 @@ public class hardwareItemsListFragment extends Fragment {
                     searchableText = "";
                     endresults = false;
                     hardAdapter.notifyDataSetChanged();
-                    switch(args) {
-                        case "cpu":
-                            getCpus(pagenumber,pagesize);
-                            pagenumber += pagesize ;
-                            break;
-                        case "vga":
-                            getVgas(pagenumber,pagesize);
-                            pagenumber += pagesize ;
-                            break;
-                        case "board":
-                            getBoards(pagenumber,pagesize);
-                            pagenumber += pagesize ;
-                            break;
-                    }
+                    getHard(pagenumber, pagesize,args);
+                    pagenumber += pagesize ;
                 }else{
                     isSearch = true;
                     viewlist.clear(); // clear list
@@ -176,21 +112,8 @@ public class hardwareItemsListFragment extends Fragment {
                     endresults = false;
                     searchableText = txtToSearch.getText().toString();
                     hardAdapter.notifyDataSetChanged();
-              //      Toast.makeText(getContext(), "not empty",Toast.LENGTH_SHORT).show();
-                    switch(args) {
-                        case "cpu":
-                            getCpusSearch(searchableText,pagenumber,pagesize);
-                            pagenumber += pagesize ;
-                            break;
-                        case "vga":
-                            getVgasSearch(searchableText,pagenumber,pagesize);
-                            pagenumber += pagesize ;
-                            break;
-                        case "board":
-                            getBoardsSearch(searchableText,pagenumber,pagesize);
-                            pagenumber += pagesize ;
-                            break;
-                    }
+                    getHardSearch(searchableText,pagenumber,pagesize,args);
+                    pagenumber += pagesize ;
                 }
 
             }
@@ -201,9 +124,23 @@ public class hardwareItemsListFragment extends Fragment {
 
         return root;
     }
-    private void getCpusSearch(String txt, int pagenumber, int pagesize){
+    private void getHardSearch(String txt, int pagenumber, int pagesize,String Type){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<List<HardListController>> call = RESTapis.getCpusSearch(txt,pagenumber,pagesize);
+        Call<List<HardListController>> call;
+        switch (Type){
+            case "cpu":
+      call = RESTapis.getCpusSearch(txt,pagenumber,pagesize);
+                break;
+            case "vga":
+                call = RESTapis.getVgasSearch(txt,pagenumber,pagesize);
+                break;
+            case "board":
+                call = RESTapis.getBoardsSearch(txt,pagenumber,pagesize);
+                break;
+            default:
+                call = RESTapis.getCpusSearch(txt,pagenumber,pagesize);
+        }
+
         call.enqueue(new Callback<List<HardListController>>() {
             @Override
             public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
@@ -229,9 +166,23 @@ public class hardwareItemsListFragment extends Fragment {
             }
         });
     }
-    private void getBoardsSearch(String txt, int pagenumber, int pagesize){
+
+    private void getHard(int pagenumber, int pagesize,String Type){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<List<HardListController>> call = RESTapis.getBoardsSearch(txt,pagenumber,pagesize);
+        Call<List<HardListController>> call;
+        switch (Type){
+            case "cpu":
+                call = RESTapis.getCpus(pagenumber,pagesize);
+                break;
+            case "vga":
+                call = RESTapis.getVgas(pagenumber,pagesize);
+                break;
+            case "board":
+                call = RESTapis.getBoards(pagenumber,pagesize);
+                break;
+            default:
+                call = RESTapis.getCpus(pagenumber,pagesize);
+        }
         call.enqueue(new Callback<List<HardListController>>() {
             @Override
             public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
@@ -240,116 +191,6 @@ public class hardwareItemsListFragment extends Fragment {
                         viewlist.add(procc);
                         itemscount = viewlist.size();
 
-                    }
-                    hardAdapter.notifyDataSetChanged();
-                }else{
-                    Log.e(TAG, response.message());
-                }
-                if (itemscount == itemscountprevious){
-                    endresults = true;
-                }else{
-                    itemscountprevious = itemscount;
-                }
-            }
-            @Override
-            public void onFailure(Call<List<HardListController>> call, Throwable t) {
-                Log.e(TAG, t.getMessage());
-            }
-        });
-    }
-    private void getVgasSearch(String txt, int pagenumber, int pagesize){
-        RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<List<HardListController>> call = RESTapis.getVgasSearch(txt,pagenumber,pagesize);
-        call.enqueue(new Callback<List<HardListController>>() {
-            @Override
-            public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
-                if(response.isSuccessful()) {
-                    for(HardListController procc: response.body()){
-                        viewlist.add(procc);
-                        itemscount = viewlist.size();
-
-                    }
-                    hardAdapter.notifyDataSetChanged();
-                }else{
-                    Log.e(TAG, response.message());
-                }
-                if (itemscount == itemscountprevious){
-                    endresults = true;
-                }else{
-                    itemscountprevious = itemscount;
-                }
-            }
-            @Override
-            public void onFailure(Call<List<HardListController>> call, Throwable t) {
-                Log.e(TAG, t.getMessage());
-            }
-        });
-    }
-    private void getCpus(int pagenumber, int pagesize){
-        RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<List<HardListController>> call = RESTapis.getCpus(pagenumber,pagesize);
-        call.enqueue(new Callback<List<HardListController>>() {
-            @Override
-            public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
-                if(response.isSuccessful()) {
-                    for(HardListController procc: response.body()){
-                        viewlist.add(procc);
-                        itemscount = viewlist.size();
-
-                    }
-                    hardAdapter.notifyDataSetChanged();
-                }else{
-                    Log.e(TAG, response.message());
-                }
-                if (itemscount == itemscountprevious){
-                    endresults = true;
-                }else{
-                    itemscountprevious = itemscount;
-                }
-            }
-            @Override
-            public void onFailure(Call<List<HardListController>> call, Throwable t) {
-                Log.e(TAG, t.getMessage());
-            }
-        });
-    }
-    private void getBoards(int pagenumber, int pagesize){
-        RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<List<HardListController>> call = RESTapis.getBoards(pagenumber,pagesize);
-        call.enqueue(new Callback<List<HardListController>>() {
-            @Override
-            public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
-                if(response.isSuccessful()) {
-                    for(HardListController procc: response.body()){
-                        viewlist.add(procc);
-                        itemscount = viewlist.size();
-                    }
-                    hardAdapter.notifyDataSetChanged();
-                }else{
-                    Log.e(TAG, response.message());
-                }
-                if (itemscount == itemscountprevious){
-                    endresults = true;
-                }else{
-                    itemscountprevious = itemscount;
-                }
-            }
-            @Override
-            public void onFailure(Call<List<HardListController>> call, Throwable t) {
-                Log.e(TAG, t.getMessage());
-            }
-        });
-    }
-    private void getVgas(int pagenumber, int pagesize){
-        RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<List<HardListController>> call = RESTapis.getVgas(pagenumber,pagesize);
-        call.enqueue(new Callback<List<HardListController>>() {
-            @Override
-            public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
-                if(response.isSuccessful()) {
-                    for(HardListController procc: response.body()){
-                        viewlist.add(procc);
-                        itemscount = viewlist.size();
                     }
                     hardAdapter.notifyDataSetChanged();
                 }else{

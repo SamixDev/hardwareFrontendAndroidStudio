@@ -27,7 +27,7 @@
 />
         <action
             android:id="@+id/action_menu_to_boardlist"
-            app:destination="@id/nav_cpu"
+            app:destination="@id/nav_hardware"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
@@ -39,7 +39,7 @@
         </action>
         <action
             android:id="@+id/action_menu_to_cpulist"
-            app:destination="@id/nav_cpu"
+            app:destination="@id/nav_hardware"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
@@ -51,7 +51,7 @@
         </action>
         <action
             android:id="@+id/action_menu_to_vgalist"
-            app:destination="@id/nav_cpu"
+            app:destination="@id/nav_hardware"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
@@ -75,12 +75,19 @@
         tools:layout="@layout/fragment_build" />
 
     <fragment
-        android:id="@+id/nav_cpu"
+        android:id="@+id/nav_hardware"
         android:name="com.godsamix.hardware.hardwareItemsListFragment"
         tools:layout="@layout/fragment_hardware_items_list" >
         <argument
             android:name="listType"
             app:argType="string" />
+        <action
+            android:id="@+id/action_nav_hardware_to_nav_hardware_specs"
+            app:destination="@id/nav_hardware_specs"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/nav_about"
@@ -90,4 +97,15 @@
         android:id="@+id/nav_version"
         android:name="com.godsamix.hardware.VersionFragment"
         tools:layout="@layout/fragment_version" />
+    <fragment
+        android:id="@+id/nav_hardware_specs"
+        android:name="com.godsamix.hardware.HardwareSpecsFragment"
+        tools:layout="@layout/fragment_hardware_specs" >
+        <argument
+            android:name="HardwareCode"
+            app:argType="string" />
+        <argument
+            android:name="HardwareType"
+            app:argType="string" />
+    </fragment>
 </navigation>
