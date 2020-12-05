@@ -54,18 +54,6 @@ public class hardwareItemsListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hardware_items_list, container, false);
 
-//        // inflate the layout of the popup window
-//        LayoutInflater inflater_popup = (LayoutInflater)
-//                getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
-//        View popupView = inflater.inflate(R.layout.popup_hardware_specs, null);
-
-//        // create the popup window
-//        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-//        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//        boolean focusable = true; // lets taps outside the popup also dismiss it
-//        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-//
-
         searchBtn = root.findViewById(R.id.searchbutton);
         txtToSearch = root.findViewById(R.id.searchinput);
 

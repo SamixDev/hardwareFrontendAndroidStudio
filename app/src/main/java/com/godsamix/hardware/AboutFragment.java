@@ -59,7 +59,7 @@ public class AboutFragment extends Fragment {
         copyRightsElement.setTitle(copyrights);
         copyRightsElement.setIconDrawable(R.drawable.github);
         copyRightsElement.setAutoApplyIconTint(true);
-        copyRightsElement.setIconTint(mehdi.sakout.aboutpage.R.color.about_item_icon_color);
+      //  copyRightsElement.setIconTint(mehdi.sakout.aboutpage.R.color.about_item_icon_color);
         copyRightsElement.setIconNightTint(android.R.color.white);
         copyRightsElement.setGravity(Gravity.CENTER);
         copyRightsElement.setOnClickListener(new View.OnClickListener() {
