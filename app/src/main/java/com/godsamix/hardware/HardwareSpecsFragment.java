@@ -2,29 +2,21 @@ package com.godsamix.hardware;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import com.godsamix.hardware.Controllers.HardListController;
 import com.godsamix.hardware.Helpers.RESTapis;
 import com.godsamix.hardware.Helpers.RetrofitService;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,23 +26,21 @@ import static android.content.ContentValues.TAG;
 public class HardwareSpecsFragment extends Fragment {
     public static String args_code;
     public static String args_type;
-    TextView t3;
+    LinearLayout linearLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hardware_specs, container, false);
         args_code = this.getArguments().getString("HardwareCode");
         args_type = this.getArguments().getString("HardwareType");
-
-        getOneCpu(args_code,args_type);
-
-
+        linearLayout = root.findViewById(R.id.linlay);
+        getHardwareSpecs(args_code,args_type);
 
 
         return root;
     }
 
-    private void getOneCpu(String code, String Type){
+    private void getHardwareSpecs(String code, String Type){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
         Call call;
         switch (Type){
@@ -76,6 +66,11 @@ public class HardwareSpecsFragment extends Fragment {
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         for(int i = 0; i<jsonObject.length(); i++){
                             Log.e(TAG, "key = " + jsonObject.names().getString(i) + ", value = " + jsonObject.get(jsonObject.names().getString(i)));
+                            TextView textView = new TextView(getContext());
+                            textView.setPadding(10,10,10,10);
+                            textView.setText(jsonObject.names().getString(i) + " :" +jsonObject.get(jsonObject.names().getString(i)).toString());
+                            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+                            linearLayout.addView(textView);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -86,7 +81,6 @@ public class HardwareSpecsFragment extends Fragment {
             @Override
             public void onFailure(Call call, Throwable t) {
              //   Log.e(TAG, t.getMessage());
-                t3.setText(t.getMessage());
             }
         });
     }
