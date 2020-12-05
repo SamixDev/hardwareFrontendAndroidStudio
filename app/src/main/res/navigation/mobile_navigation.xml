@@ -104,5 +104,8 @@
         <argument
             android:name="HardwareCode"
             app:argType="string" />
+        <argument
+            android:name="HardwareType"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -63,37 +63,13 @@ public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHo
                 holder.img.setImageResource(R.drawable.boardempty);
             }
         }
-
-//        // inflate the layout of the popup window
-//        LayoutInflater inflater = (LayoutInflater)
-//                context.getSystemService(LAYOUT_INFLATER_SERVICE);
-//        View popupView = inflater.inflate(R.layout.popup_hardware_specs, null);
-//
-//        // create the popup window
-//        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-//        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//        boolean focusable = true; // lets taps outside the popup also dismiss it
-//        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-//        popupWindow.setElevation(20);
-//
-//        // inflate linearlayout in the popview
-//        LinearLayout linear = popupView.findViewById(R.id.linearlay);
-//        TextView hard_name = new TextView(context);
-//        hard_name.setText(holder.name.getText());
-//        TextView hard_code = new TextView(context);
-//        hard_code.setText(holder.code.getText());
-
+        
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                // addind the views to the linear layout inside the popview
-//                linear.addView(hard_name);
-//                linear.addView(hard_code);
-//                // show the popup window
-//                // which view you pass in doesn't matter, it is only used for the window tolken
-//                popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
                 Bundle bundle = new Bundle();
                 bundle.putString("HardwareCode", holder.code.getText().toString());
+                bundle.putString("HardwareType", hardwareItemsListFragment.args);
                 Navigation.findNavController(v).navigate(R.id.action_nav_hardware_to_nav_hardware_specs,bundle);
             }
         });

@@ -15,14 +15,19 @@ import androidx.lifecycle.ViewModelProviders;
 import com.godsamix.hardware.R;
 
 public class HardwareSpecsFragment extends Fragment {
-    public static String args;
+    public static String args_code;
+    public static String args_type;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hardware_specs, container, false);
-        args = this.getArguments().getString("HardwareCode");
+        args_code = this.getArguments().getString("HardwareCode");
+        args_type = this.getArguments().getString("HardwareType");
+
         TextView t = root.findViewById(R.id.textView);
-        t.setText(args);
+        t.setText(args_code);
+        TextView t2 = root.findViewById(R.id.textView2);
+        t2.setText(args_type);
 
 
         return root;
