@@ -63,7 +63,7 @@ public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHo
                 holder.img.setImageResource(R.drawable.boardempty);
             }
         }
-        
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

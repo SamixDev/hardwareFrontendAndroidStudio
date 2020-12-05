@@ -145,15 +145,15 @@ public class MainActivity extends AppCompatActivity implements
         switch (id) {
             case R.id.nav_cpu:
                 bundle.putString("listType", "cpu");
-                navController.navigate(R.id.nav_cpu,bundle,navOptionshardware);
+                navController.navigate(R.id.nav_hardware,bundle,navOptionshardware);
                 break;
             case R.id.nav_board:
                 bundle.putString("listType", "board");
-                navController.navigate(R.id.nav_cpu,bundle,navOptionshardware);
+                navController.navigate(R.id.nav_hardware,bundle,navOptionshardware);
                 break;
             case R.id.nav_vga:
                 bundle.putString("listType", "vga");
-                navController.navigate(R.id.nav_cpu,bundle,navOptionshardware);
+                navController.navigate(R.id.nav_hardware,bundle,navOptionshardware);
                 break;
             case R.id.nav_about:
                 NavOptions navOptionsabout = new NavOptions.Builder().setPopUpTo(R.id.nav_about, true)
