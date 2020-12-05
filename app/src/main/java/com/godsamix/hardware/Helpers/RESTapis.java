@@ -4,6 +4,7 @@ import com.godsamix.hardware.Controllers.HardListController;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -30,10 +31,10 @@ public interface RESTapis {
     Call<List<HardListController>> getVgasSearch(@Path("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize);
 
     @GET("hardware/cpu/{Code}")
-    Call<List<HardListController>> getOneCpu(@Path("Code") String Code);
+    Call<Object> getOneCpu(@Path("Code") String Code);
    @GET("hardware/vga/{Code}")
-    Call<List<HardListController>> getOneVga(@Path("Code") String Code);
+    Call<Object> getOneVga(@Path("Code") String Code);
    @GET("hardware/motherboard/{Code}")
-    Call<List<HardListController>> getOneBoard(@Path("Code") String Code);
+    Call<Object> getOneBoard(@Path("Code") String Code);
 
 }
