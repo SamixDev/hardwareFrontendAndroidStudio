@@ -5,6 +5,10 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="12dp"
+    android:background="@drawable/roundedcornerslist"
+ android:layout_marginRight="12sp"
+    android:layout_marginLeft="10sp"
+    android:layout_marginBottom="12sp"
     >
 
     <ImageView
@@ -13,7 +17,7 @@
         android:layout_height="50dp"
         app:srcCompat="@drawable/cpuempty"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp" />
 
 
     <LinearLayout
