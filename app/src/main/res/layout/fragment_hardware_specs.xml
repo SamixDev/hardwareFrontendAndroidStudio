@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".hardwareItemsListFragment"
-    android:background="@color/customgrey"
+    android:background="@color/blancsale"
     >
     <ScrollView
         android:layout_width="match_parent"
@@ -16,7 +16,9 @@
     android:layout_height="wrap_content"
     android:id="@+id/linlay"
     android:orientation="vertical"
-
+    android:layout_marginRight="12sp"
+    android:layout_marginLeft="12sp"
+    android:layout_marginBottom="12sp"
     >
 
 </LinearLayout>
