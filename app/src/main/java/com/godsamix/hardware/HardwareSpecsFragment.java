@@ -75,7 +75,7 @@ public class HardwareSpecsFragment extends Fragment {
                         JSONArray jsonArray = new JSONArray(res);
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         for(int i = 0; i<jsonObject.length(); i++){
-                            Log.e(TAG, "key = " + jsonObject.names().getString(i) + ", value = " + jsonObject.get(jsonObject.names().getString(i)));
+                      //      Log.e(TAG, "key = " + jsonObject.names().getString(i) + ", value = " + jsonObject.get(jsonObject.names().getString(i)));
                            if (jsonObject.names().getString(i).equals("Image")){
                                ImageView img = new ImageView(getContext());
                                int width = 250;
@@ -90,7 +90,7 @@ public class HardwareSpecsFragment extends Fragment {
                            }else{
                                TextView textView = new TextView(getContext());
                                textView.setPadding(10,10,10,10);
-                               textView.setText(jsonObject.names().getString(i) + ": " +jsonObject.get(jsonObject.names().getString(i)).toString());
+                               textView.setText(jsonObject.names().getString(i) + ":\n" +jsonObject.get(jsonObject.names().getString(i)).toString());
                                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
                                Drawable drawable = ResourcesCompat.getDrawable(getResources(),R.drawable.roundedcornerslist,null);
                                textView.setBackground(drawable);
@@ -99,9 +99,6 @@ public class HardwareSpecsFragment extends Fragment {
                                textView.setLayoutParams(lp);
                                linearLayout.addView(textView);
 
-//                               android:layout_marginRight="12sp"
-//                               android:layout_marginLeft="10sp"
-//                               android:layout_marginBottom="12sp"
                            }
                         }
                     } catch (JSONException e) {
