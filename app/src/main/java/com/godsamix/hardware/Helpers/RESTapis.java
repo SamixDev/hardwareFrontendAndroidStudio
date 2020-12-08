@@ -32,9 +32,9 @@ public interface RESTapis {
 
     @GET("hardware/cpu/{Code}")
     Call<Object> getOneCpu(@Path("Code") String Code);
-   @GET("hardware/vga/{Code}")
+    @GET("hardware/vga/{Code}")
     Call<Object> getOneVga(@Path("Code") String Code);
-   @GET("hardware/motherboard/{Code}")
+    @GET("hardware/motherboard/{Code}")
     Call<Object> getOneBoard(@Path("Code") String Code);
 
 }

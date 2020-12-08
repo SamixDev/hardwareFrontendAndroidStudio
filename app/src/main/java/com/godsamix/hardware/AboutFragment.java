@@ -47,6 +47,7 @@ public class AboutFragment extends Fragment {
                 .addPlayStore("https://play.google.com/store/apps/developer?id=Samix","Rate me on the play store")
                 .addGitHub("SamixDev","Fork me on GitHub")
  //               .addInstagram("medyo80")
+                .addWebsite("https://www.squareco.co","To Learn about the APIs visit my Website")
                 .addItem(getCopyRightsElement())
                 .create();
 
