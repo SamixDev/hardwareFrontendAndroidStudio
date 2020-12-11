@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements
     String personEmail;
     String personId;
     Uri personPhoto;
-    String idToken;
+    public static String idToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -217,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
              idToken = account.getIdToken();
+            Log.e("token is ", idToken);
             // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {
@@ -259,7 +260,8 @@ public class MainActivity extends AppCompatActivity implements
              personEmail = acct.getEmail();
              personId = acct.getId();
              personPhoto = acct.getPhotoUrl();
-          //  idToken = acct.getIdToken();
+            idToken = acct.getIdToken();
+            Log.e("silent token is ", idToken);
             return true;
         }
         return false;

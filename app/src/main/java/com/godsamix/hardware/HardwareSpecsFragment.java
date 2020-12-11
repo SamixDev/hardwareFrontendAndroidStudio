@@ -109,7 +109,6 @@ public class HardwareSpecsFragment extends Fragment {
             }
             @Override
             public void onFailure(Call call, Throwable t) {
-             //   Log.e(TAG, t.getMessage());
             }
         });
     }
