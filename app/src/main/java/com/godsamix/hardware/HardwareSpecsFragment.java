@@ -75,7 +75,6 @@ public class HardwareSpecsFragment extends Fragment {
                         JSONArray jsonArray = new JSONArray(res);
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         for(int i = 0; i<jsonObject.length(); i++){
-                      //      Log.e(TAG, "key = " + jsonObject.names().getString(i) + ", value = " + jsonObject.get(jsonObject.names().getString(i)));
                            if (jsonObject.names().getString(i).equals("Image")){
                                ImageView img = new ImageView(getContext());
                                int width = 250;
