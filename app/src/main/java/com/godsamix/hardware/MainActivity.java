@@ -73,10 +73,10 @@ public class MainActivity extends AppCompatActivity implements
 
         //shared prefs init
         sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        String personEmail = sharedPreferences.getString("email", "");
-        String idToken = sharedPreferences.getString("token", "");
+        personEmail = sharedPreferences.getString("email", "");
+        idToken = sharedPreferences.getString("token", "");
         Log.e("email is ", personEmail);
-        Log.e("token is ", personEmail);
+        Log.e("token is ", idToken);
 
         navigationView = findViewById(R.id.nav_view);
         name = navigationView.getHeaderView(0).findViewById(R.id.namenav);
@@ -229,13 +229,14 @@ public class MainActivity extends AppCompatActivity implements
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-             idToken = account.getIdToken();
-            Log.e("token is ", idToken);
-            Log.e("email is ", personEmail);
+          //   idToken = account.getIdToken();
+          //  personEmail = account.getEmail();
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
             myEdit.putString("email", account.getEmail());
             myEdit.commit();
-
+            personEmail = sharedPreferences.getString("email", "");
+            Log.e("token is ", idToken);
+            Log.e("email is ", personEmail);
             // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {
