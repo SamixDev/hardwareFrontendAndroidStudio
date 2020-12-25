@@ -1,6 +1,7 @@
 package com.godsamix.hardware;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,10 +62,22 @@ public class MainActivity extends AppCompatActivity implements
     String personId;
     Uri personPhoto;
     public static String idToken;
+
+    //shared prefs
+    public  static SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //shared prefs init
+        sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        String personEmail = sharedPreferences.getString("email", "");
+        String idToken = sharedPreferences.getString("token", "");
+        Log.e("email is ", personEmail);
+        Log.e("token is ", personEmail);
+
         navigationView = findViewById(R.id.nav_view);
         name = navigationView.getHeaderView(0).findViewById(R.id.namenav);
         mail = navigationView.getHeaderView(0).findViewById(R.id.emailnav);
@@ -218,6 +231,11 @@ public class MainActivity extends AppCompatActivity implements
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
              idToken = account.getIdToken();
             Log.e("token is ", idToken);
+            Log.e("email is ", personEmail);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putString("email", account.getEmail());
+            myEdit.commit();
+
             // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {
@@ -237,6 +255,11 @@ public class MainActivity extends AppCompatActivity implements
                     public void onComplete(@NonNull Task<Void> task) {
                         // [START_EXCLUDE]
                         idToken = "";
+                        personEmail = "";
+                        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                        myEdit.putString("email", "");
+                        myEdit.putString("token", "");
+                        myEdit.commit();
                         updateUI(null);
                         // [END_EXCLUDE]
                     }
@@ -260,8 +283,8 @@ public class MainActivity extends AppCompatActivity implements
              personEmail = acct.getEmail();
              personId = acct.getId();
              personPhoto = acct.getPhotoUrl();
-            idToken = acct.getIdToken();
-            Log.e("silent token is ", idToken);
+          //  idToken = acct.getIdToken();
+           // Log.e("silent token is ", idToken);
             return true;
         }
         return false;
