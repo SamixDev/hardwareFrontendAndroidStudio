@@ -7,6 +7,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -36,5 +37,8 @@ public interface RESTapis {
     Call<Object> getOneVga(@Path("Code") String Code);
     @GET("hardware/motherboard/{Code}")
     Call<Object> getOneBoard(@Path("Code") String Code);
+
+    @POST("user/signInUp/")
+    Call<Object> signInUp(@Query("login") String login, @Query("password") String password, @Query("fullname") String fullname);
 
 }
