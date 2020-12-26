@@ -1,17 +1,25 @@
 package com.godsamix.hardware;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.godsamix.hardware.Controllers.HardListController;
+import com.godsamix.hardware.Helpers.RESTapis;
+import com.godsamix.hardware.Helpers.RetrofitService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -21,10 +29,12 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.navigation.NavArgument;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -36,7 +46,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener{
@@ -75,8 +94,6 @@ public class MainActivity extends AppCompatActivity implements
         sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         personEmail = sharedPreferences.getString("email", "");
         idToken = sharedPreferences.getString("token", "");
-        Log.e("email is ", personEmail);
-        Log.e("token is ", idToken);
 
         navigationView = findViewById(R.id.nav_view);
         name = navigationView.getHeaderView(0).findViewById(R.id.namenav);
@@ -146,6 +163,35 @@ public class MainActivity extends AppCompatActivity implements
         }
         updateUI(account);
     }
+    private void signInUp(String login, String fullname){
+        RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
+        Call call;
+        call = RESTapis.signInUp(login, fullname);
+        call.enqueue(new Callback() {
+            @SuppressLint("ResourceType")
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.isSuccessful()) {
+                    String res = new Gson().toJson(response.body());
+                    try {
+                        JSONObject obj = new JSONObject(res);
+                        idToken = obj.getString("message");
+                        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                        myEdit.putString("token", idToken);
+                        myEdit.commit();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }else{
+                }
+            }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+            }
+        });
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         menuItem.setChecked(true);
@@ -231,18 +277,18 @@ public class MainActivity extends AppCompatActivity implements
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
           //   idToken = account.getIdToken();
           //  personEmail = account.getEmail();
+            signInUp(account.getEmail(), account.getDisplayName());
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
             myEdit.putString("email", account.getEmail());
             myEdit.commit();
             personEmail = sharedPreferences.getString("email", "");
-            Log.e("token is ", idToken);
-            Log.e("email is ", personEmail);
+         //   Log.e("token is ", idToken);
+          //  Log.e("email is ", personEmail);
+
             // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("google sign in: ", "signInResult:failed code=" + e.getStatusCode());
+
             updateUI(null);
         }
     }
@@ -284,8 +330,7 @@ public class MainActivity extends AppCompatActivity implements
              personEmail = acct.getEmail();
              personId = acct.getId();
              personPhoto = acct.getPhotoUrl();
-          //  idToken = acct.getIdToken();
-           // Log.e("silent token is ", idToken);
+            signInUp(personEmail, personName);
             return true;
         }
         return false;

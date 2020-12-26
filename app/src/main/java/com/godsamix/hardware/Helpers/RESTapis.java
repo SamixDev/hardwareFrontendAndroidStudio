@@ -38,7 +38,7 @@ public interface RESTapis {
     @GET("hardware/motherboard/{Code}")
     Call<Object> getOneBoard(@Path("Code") String Code);
 
-    @POST("user/signInUp/")
-    Call<Object> signInUp(@Query("login") String login, @Query("password") String password, @Query("fullname") String fullname);
+    @GET("user/phoneSignInUp/")
+    Call<Object> signInUp(@Query("login") String login, @Query("fullname") String fullname);
 
 }
