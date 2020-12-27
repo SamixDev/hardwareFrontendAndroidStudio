@@ -6,5 +6,6 @@
     <color name="white">#FFFFFF</color>
     <color name="customgrey">#5F7D8E</color>
     <color name="blancsale">#fafafa</color>
+    <color name="warning">#ffcc00</color>
 
 </resources>

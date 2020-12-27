@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -63,6 +64,14 @@ public class hardwareItemsListFragment extends Fragment {
         sharedPreferences = this.getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
         //personEmail = sharedPreferences.getString("email", "");
         idToken = sharedPreferences.getString("token", "");
+
+        //warning not signed in
+        TextView warning = root.findViewById(R.id.notifier);
+        if(idToken==""){
+            warning.setVisibility(View.VISIBLE);
+        }else{
+            warning.setVisibility(View.INVISIBLE);
+        }
 
         recyclerView = root.findViewById(R.id.recyclerview);
         args = this.getArguments().getString("listType");
