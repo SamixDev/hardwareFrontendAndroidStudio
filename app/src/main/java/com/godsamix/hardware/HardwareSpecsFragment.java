@@ -62,15 +62,13 @@ public class HardwareSpecsFragment extends Fragment {
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
         Call call;
         switch (Type){
-            case "cpu":
-                call = RESTapis.getOneCpu(code,"Bearer "+idToken);
-                break;
             case "vga":
                 call = RESTapis.getOneVga(code,"Bearer "+idToken);
                 break;
             case "board":
                 call = RESTapis.getOneBoard(code,"Bearer "+idToken);
                 break;
+            case "cpu":
             default:
                 call = RESTapis.getOneCpu(code,"Bearer "+idToken);
         }

@@ -142,15 +142,13 @@ public class hardwareItemsListFragment extends Fragment {
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
         Call<responseController> call;
         switch (Type){
-            case "cpu":
-      call = RESTapis.getCpusSearch(txt,pagenumber,pagesize,"Bearer "+idToken);
-                break;
             case "vga":
                 call = RESTapis.getVgasSearch(txt,pagenumber,pagesize,"Bearer "+idToken);
                 break;
             case "board":
                 call = RESTapis.getBoardsSearch(txt,pagenumber,pagesize,"Bearer "+idToken);
                 break;
+            case "cpu":
             default:
                 call = RESTapis.getCpusSearch(txt,pagenumber,pagesize,"Bearer "+idToken);
         }
@@ -186,15 +184,13 @@ public class hardwareItemsListFragment extends Fragment {
         Call<responseController> call;
       //  Log.e("type ", Type);
         switch (Type){
-            case "cpu":
-                call = RESTapis.getCpus(pagenumber,pagesize,"Bearer "+idToken);
-                break;
             case "vga":
                 call = RESTapis.getVgas(pagenumber,pagesize,"Bearer "+idToken);
                 break;
             case "board":
                 call = RESTapis.getBoards(pagenumber,pagesize,"Bearer "+idToken);
                 break;
+            case "cpu":
             default:
                 call = RESTapis.getCpus(pagenumber,pagesize,"Bearer "+idToken);
         }
