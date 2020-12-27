@@ -4,20 +4,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.godsamix.hardware.Controllers.responseController;
 import com.godsamix.hardware.Helpers.HardListAdapter;
 import com.godsamix.hardware.Controllers.HardListController;
 
@@ -32,14 +29,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 public class hardwareItemsListFragment extends Fragment {
 
     private final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
-    private List<HardListController> viewlist = new ArrayList<>();
+    private List<HardListController> viewlist = new ArrayList<HardListController>();
+
     private HardListAdapter hardAdapter;
     public static String args;
     public boolean endresults = false;
@@ -134,7 +131,7 @@ public class hardwareItemsListFragment extends Fragment {
     }
     private void getHardSearch(String txt, int pagenumber, int pagesize,String Type){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<List<HardListController>> call;
+        Call<responseController> call;
         switch (Type){
             case "cpu":
       call = RESTapis.getCpusSearch(txt,pagenumber,pagesize,"Bearer "+idToken);
@@ -149,11 +146,11 @@ public class hardwareItemsListFragment extends Fragment {
                 call = RESTapis.getCpusSearch(txt,pagenumber,pagesize,"Bearer "+idToken);
         }
 
-        call.enqueue(new Callback<List<HardListController>>() {
+        call.enqueue(new Callback<responseController>() {
             @Override
-            public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
+            public void onResponse(Call<responseController> call, Response<responseController> response) {
                 if(response.isSuccessful()) {
-                    for(HardListController procc: response.body()){
+                    for(HardListController procc: response.body().getMessage()){
                         viewlist.add(procc);
                         itemscount = viewlist.size();
 
@@ -169,7 +166,7 @@ public class hardwareItemsListFragment extends Fragment {
                 }
             }
             @Override
-            public void onFailure(Call<List<HardListController>> call, Throwable t) {
+            public void onFailure(Call<responseController> call, Throwable t) {
              //   Log.e(TAG, t.getMessage());
             }
         });
@@ -177,8 +174,8 @@ public class hardwareItemsListFragment extends Fragment {
 
     private void getHard(int pagenumber, int pagesize,String Type){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<List<HardListController>> call;
-        Log.e("type ", Type);
+        Call<responseController> call;
+      //  Log.e("type ", Type);
         switch (Type){
             case "cpu":
                 call = RESTapis.getCpus(pagenumber,pagesize,"Bearer "+idToken);
@@ -192,12 +189,15 @@ public class hardwareItemsListFragment extends Fragment {
             default:
                 call = RESTapis.getCpus(pagenumber,pagesize,"Bearer "+idToken);
         }
-        call.enqueue(new Callback<List<HardListController>>() {
+        call.enqueue(new Callback<responseController>() {
             @Override
-            public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
-                Log.e("res", response.message());
+            public void onResponse(Call<responseController> call, Response<responseController> response) {
+             //   Log.e("res", response.body().getMessage().toString());
+//                for (HardListController rr: response.body().getMessage()){
+//                    Log.e("res2", rr.getName());
+//                }
                 if(response.isSuccessful()) {
-                    for(HardListController procc: response.body()){
+                    for(HardListController procc: response.body().getMessage()){
                         viewlist.add(procc);
                         itemscount = viewlist.size();
 
@@ -213,7 +213,7 @@ public class hardwareItemsListFragment extends Fragment {
                 }
             }
             @Override
-            public void onFailure(Call<List<HardListController>> call, Throwable t) {
+            public void onFailure(Call<responseController> call, Throwable t) {
                 Log.e(TAG, t.getMessage());
             }
         });

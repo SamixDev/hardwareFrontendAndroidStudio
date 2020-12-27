@@ -3,7 +3,7 @@ package com.godsamix.hardware.Helpers;
 import android.content.SharedPreferences;
 
 import com.godsamix.hardware.Controllers.HardListController;
-
+import com.godsamix.hardware.Controllers.responseController;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -20,18 +20,18 @@ public interface RESTapis {
   //  @GET(".")
   //   Call<List<HardListController>> getUsers();
     @GET("hardware/cpuslist")
-    Call<List<HardListController>> getCpus(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
+    Call<responseController> getCpus(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
     @GET("hardware/motherboardslist")
-    Call<List<HardListController>> getBoards(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
+    Call<responseController> getBoards(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
     @GET("hardware/vgaslist")
-    Call<List<HardListController>> getVgas(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
+    Call<responseController> getVgas(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
 
-    @GET("hardware/cpusearch/{name}")
-    Call<List<HardListController>> getCpusSearch(@Path("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
-    @GET("hardware/boardsearch/{name}")
-    Call<List<HardListController>> getBoardsSearch(@Path("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
-    @GET("hardware/vgasearch/{name}")
-    Call<List<HardListController>> getVgasSearch(@Path("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
+    @GET("hardware/cpusearch")
+    Call<responseController> getCpusSearch(@Query("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
+    @GET("hardware/boardsearch")
+    Call<responseController> getBoardsSearch(@Query("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
+    @GET("hardware/vgasearch")
+    Call<responseController> getVgasSearch(@Query("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
 
     @GET("hardware/cpu/{Code}")
     Call<Object> getOneCpu(@Path("Code") String Code,@Header("Authorization") String authorization);

@@ -2,11 +2,13 @@ package com.godsamix.hardware.Controllers;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class responseController {
     @SerializedName("status")
     private  String status;
     @SerializedName("message")
-    private  String message;
+    private List<HardListController> message;
 
     public responseController(String status, String message) {
         this.status = status;
@@ -22,7 +24,7 @@ public class responseController {
         return status;
     }
 
-    public String getMessage() {
+    public List<HardListController> getMessage() {
         return message;
     }
 
