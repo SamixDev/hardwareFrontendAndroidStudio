@@ -35,20 +35,6 @@ public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHo
         this.context = context;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private final TextView code;
-        private final TextView name;
-        private final TextView manuf;
-        private final ImageView img;
-        public ViewHolder(View itemView) {
-            super(itemView);
-            code = itemView.findViewById(R.id.code);
-            name = itemView.findViewById(R.id.name);
-            manuf = itemView.findViewById(R.id.manuf);
-            img = itemView.findViewById(R.id.img);
-        }
-    }
-
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HardListController lst = hard.get(position);
@@ -88,5 +74,19 @@ public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHo
     @Override
     public int getItemCount() {
         return hard.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        private final TextView code;
+        private final TextView name;
+        private final TextView manuf;
+        private final ImageView img;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            code = itemView.findViewById(R.id.code);
+            name = itemView.findViewById(R.id.name);
+            manuf = itemView.findViewById(R.id.manuf);
+            img = itemView.findViewById(R.id.img);
+        }
     }
 }
