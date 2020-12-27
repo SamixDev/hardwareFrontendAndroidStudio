@@ -33,12 +33,12 @@ public interface RESTapis {
     @GET("hardware/vgasearch")
     Call<responseController> getVgasSearch(@Query("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
 
-    @GET("hardware/cpu/{Code}")
-    Call<Object> getOneCpu(@Path("Code") String Code,@Header("Authorization") String authorization);
-    @GET("hardware/vga/{Code}")
-    Call<Object> getOneVga(@Path("Code") String Code,@Header("Authorization") String authorization);
-    @GET("hardware/motherboard/{Code}")
-    Call<Object> getOneBoard(@Path("Code") String Code,@Header("Authorization") String authorization);
+    @GET("hardware/cpu")
+    Call<Object> getOneCpu(@Query("Code") String Code,@Header("Authorization") String authorization);
+    @GET("hardware/vga")
+    Call<Object> getOneVga(@Query("Code") String Code,@Header("Authorization") String authorization);
+    @GET("hardware/motherboard")
+    Call<Object> getOneBoard(@Query("Code") String Code,@Header("Authorization") String authorization);
 
     @GET("user/phoneSignInUp/")
     Call<Object> signInUp(@Query("login") String login, @Query("fullname") String fullname);
