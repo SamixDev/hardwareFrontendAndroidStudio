@@ -81,16 +81,24 @@ public class HardwareSpecsFragment extends Fragment {
             @SuppressLint("ResourceType")
             @Override
             public void onResponse(Call call, Response response) {
+            //    Log.e("ponse", response.);
                 if(response.isSuccessful()) {
                   //  String res = new Gson().toJson(response.body());
                     String res = new Gson().toJson(response.body());
                     Log.e("res", res.toString());
-
+//                    try {
+//                        JSONObject jsonOb = new JSONObject(res);
+//                        Log.e("json obj", jsonOb.getJSONArray("message").toString());
+//                        JSONObject jsonObject2 = jsonOb.getJSONObject("status");
+//                        Log.e("json obj2", jsonObject2.toString());
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
                     try {
-                        JSONArray jsonArray = new JSONArray(res);
-                        Log.e("arr ", jsonArray.toString());
-                        JSONObject jsonObject = jsonArray.getJSONObject(0).getJSONObject("message");
-                        Log.e("res2", jsonObject.toString());
+                        JSONObject jsonOb = new JSONObject(res);
+                        JSONArray jsonArray = jsonOb.getJSONArray("message");
+                        JSONObject jsonObject =jsonArray.getJSONObject(0);
+
                         for(int i = 0; i<jsonObject.length(); i++){
                            if (jsonObject.names().getString(i).equals("Image")){
                                ImageView img = new ImageView(getContext());
