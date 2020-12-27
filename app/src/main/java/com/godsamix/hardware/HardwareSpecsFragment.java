@@ -1,6 +1,7 @@
 package com.godsamix.hardware;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,11 +32,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 public class HardwareSpecsFragment extends Fragment {
     public static String args_code;
     public static String args_type;
     LinearLayout linearLayout;
+    public static String idToken;
+    //shared prefs
+    public  static SharedPreferences sharedPreferences;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +50,10 @@ public class HardwareSpecsFragment extends Fragment {
         linearLayout = root.findViewById(R.id.linlay);
         getHardwareSpecs(args_code,args_type);
 
+        //shared prefs init
+        sharedPreferences = this.getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        //personEmail = sharedPreferences.getString("email", "");
+        idToken = sharedPreferences.getString("token", "");
 
         return root;
     }
@@ -54,16 +63,16 @@ public class HardwareSpecsFragment extends Fragment {
         Call call;
         switch (Type){
             case "cpu":
-                call = RESTapis.getOneCpu(code);
+                call = RESTapis.getOneCpu(code,idToken);
                 break;
             case "vga":
-                call = RESTapis.getOneVga(code);
+                call = RESTapis.getOneVga(code,idToken);
                 break;
             case "board":
-                call = RESTapis.getOneBoard(code);
+                call = RESTapis.getOneBoard(code,idToken);
                 break;
             default:
-                call = RESTapis.getOneCpu(code);
+                call = RESTapis.getOneCpu(code,idToken);
         }
         call.enqueue(new Callback() {
             @SuppressLint("ResourceType")

@@ -1,5 +1,6 @@
 package com.godsamix.hardware;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,6 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
 
 public class hardwareItemsListFragment extends Fragment {
 
@@ -49,6 +51,9 @@ public class hardwareItemsListFragment extends Fragment {
     public TextInputEditText txtToSearch;
     public String searchableText;
     public boolean isSearch = false;
+    public static String idToken;
+    //shared prefs
+    public  static SharedPreferences sharedPreferences;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +61,11 @@ public class hardwareItemsListFragment extends Fragment {
 
         searchBtn = root.findViewById(R.id.searchbutton);
         txtToSearch = root.findViewById(R.id.searchinput);
+
+        //shared prefs init
+        sharedPreferences = this.getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        //personEmail = sharedPreferences.getString("email", "");
+        idToken = sharedPreferences.getString("token", "");
 
         recyclerView = root.findViewById(R.id.recyclerview);
         args = this.getArguments().getString("listType");
@@ -127,16 +137,16 @@ public class hardwareItemsListFragment extends Fragment {
         Call<List<HardListController>> call;
         switch (Type){
             case "cpu":
-      call = RESTapis.getCpusSearch(txt,pagenumber,pagesize);
+      call = RESTapis.getCpusSearch(txt,pagenumber,pagesize,"Bearer "+idToken);
                 break;
             case "vga":
-                call = RESTapis.getVgasSearch(txt,pagenumber,pagesize);
+                call = RESTapis.getVgasSearch(txt,pagenumber,pagesize,"Bearer "+idToken);
                 break;
             case "board":
-                call = RESTapis.getBoardsSearch(txt,pagenumber,pagesize);
+                call = RESTapis.getBoardsSearch(txt,pagenumber,pagesize,"Bearer "+idToken);
                 break;
             default:
-                call = RESTapis.getCpusSearch(txt,pagenumber,pagesize);
+                call = RESTapis.getCpusSearch(txt,pagenumber,pagesize,"Bearer "+idToken);
         }
 
         call.enqueue(new Callback<List<HardListController>>() {
@@ -150,7 +160,7 @@ public class hardwareItemsListFragment extends Fragment {
                     }
                     hardAdapter.notifyDataSetChanged();
                 }else{
-                    Log.e(TAG, response.message());
+                   // Log.e(TAG, response.message());
                 }
                 if (itemscount == itemscountprevious){
                     endresults = true;
@@ -160,7 +170,7 @@ public class hardwareItemsListFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<List<HardListController>> call, Throwable t) {
-                Log.e(TAG, t.getMessage());
+             //   Log.e(TAG, t.getMessage());
             }
         });
     }
@@ -168,22 +178,24 @@ public class hardwareItemsListFragment extends Fragment {
     private void getHard(int pagenumber, int pagesize,String Type){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
         Call<List<HardListController>> call;
+        Log.e("type ", Type);
         switch (Type){
             case "cpu":
-                call = RESTapis.getCpus(pagenumber,pagesize);
+                call = RESTapis.getCpus(pagenumber,pagesize,"Bearer "+idToken);
                 break;
             case "vga":
-                call = RESTapis.getVgas(pagenumber,pagesize);
+                call = RESTapis.getVgas(pagenumber,pagesize,"Bearer "+idToken);
                 break;
             case "board":
-                call = RESTapis.getBoards(pagenumber,pagesize);
+                call = RESTapis.getBoards(pagenumber,pagesize,"Bearer "+idToken);
                 break;
             default:
-                call = RESTapis.getCpus(pagenumber,pagesize);
+                call = RESTapis.getCpus(pagenumber,pagesize,"Bearer "+idToken);
         }
         call.enqueue(new Callback<List<HardListController>>() {
             @Override
             public void onResponse(Call<List<HardListController>> call, Response<List<HardListController>> response) {
+                Log.e("res", response.message());
                 if(response.isSuccessful()) {
                     for(HardListController procc: response.body()){
                         viewlist.add(procc);
@@ -192,7 +204,7 @@ public class hardwareItemsListFragment extends Fragment {
                     }
                     hardAdapter.notifyDataSetChanged();
                 }else{
-                    Log.e(TAG, response.message());
+                //    Log.e(TAG, response.message());
                 }
                 if (itemscount == itemscountprevious){
                     endresults = true;

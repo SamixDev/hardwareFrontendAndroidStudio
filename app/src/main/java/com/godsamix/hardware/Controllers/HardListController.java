@@ -3,6 +3,7 @@ package com.godsamix.hardware.Controllers;
 import com.google.gson.annotations.SerializedName;
 
 public class HardListController {
+
     @SerializedName("Code")
     private  String Code;
     @SerializedName("Name")
