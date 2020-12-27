@@ -45,15 +45,18 @@ public class HardwareSpecsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hardware_specs, container, false);
-        args_code = this.getArguments().getString("HardwareCode");
-        args_type = this.getArguments().getString("HardwareType");
-        linearLayout = root.findViewById(R.id.linlay);
-        getHardwareSpecs(args_code,args_type);
 
         //shared prefs init
         sharedPreferences = this.getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
         //personEmail = sharedPreferences.getString("email", "");
         idToken = sharedPreferences.getString("token", "");
+        args_code = this.getArguments().getString("HardwareCode");
+        args_type = this.getArguments().getString("HardwareType");
+        linearLayout = root.findViewById(R.id.linlay);
+        getHardwareSpecs(args_code,args_type);
+
+
+
 
         return root;
     }
@@ -63,26 +66,31 @@ public class HardwareSpecsFragment extends Fragment {
         Call call;
         switch (Type){
             case "cpu":
-                call = RESTapis.getOneCpu(code,idToken);
+                call = RESTapis.getOneCpu(code,"Bearer "+idToken);
                 break;
             case "vga":
-                call = RESTapis.getOneVga(code,idToken);
+                call = RESTapis.getOneVga(code,"Bearer "+idToken);
                 break;
             case "board":
-                call = RESTapis.getOneBoard(code,idToken);
+                call = RESTapis.getOneBoard(code,"Bearer "+idToken);
                 break;
             default:
-                call = RESTapis.getOneCpu(code,idToken);
+                call = RESTapis.getOneCpu(code,"Bearer "+idToken);
         }
         call.enqueue(new Callback() {
             @SuppressLint("ResourceType")
             @Override
             public void onResponse(Call call, Response response) {
                 if(response.isSuccessful()) {
+                  //  String res = new Gson().toJson(response.body());
                     String res = new Gson().toJson(response.body());
+                    Log.e("res", res.toString());
+
                     try {
                         JSONArray jsonArray = new JSONArray(res);
-                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                        Log.e("arr ", jsonArray.toString());
+                        JSONObject jsonObject = jsonArray.getJSONObject(0).getJSONObject("message");
+                        Log.e("res2", jsonObject.toString());
                         for(int i = 0; i<jsonObject.length(); i++){
                            if (jsonObject.names().getString(i).equals("Image")){
                                ImageView img = new ImageView(getContext());
@@ -113,6 +121,7 @@ public class HardwareSpecsFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }else{
+                    Log.e("res", "unsuccessfull");
                 }
             }
             @Override

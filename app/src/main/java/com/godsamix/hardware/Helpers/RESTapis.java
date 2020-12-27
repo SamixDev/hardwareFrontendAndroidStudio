@@ -17,8 +17,7 @@ import retrofit2.http.Query;
 
 public interface RESTapis {
 // those are the rest api methods list for retro2
-  //  @GET(".")
-  //   Call<List<HardListController>> getUsers();
+
     @GET("hardware/cpuslist")
     Call<responseController> getCpus(@Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
     @GET("hardware/motherboardslist")
@@ -34,11 +33,11 @@ public interface RESTapis {
     Call<responseController> getVgasSearch(@Query("name") String name, @Query("pagestart") int pagestart, @Query("pagesize") int pagesize,@Header("Authorization") String authorization);
 
     @GET("hardware/cpu")
-    Call<Object> getOneCpu(@Query("Code") String Code,@Header("Authorization") String authorization);
+    Call<Object> getOneCpu(@Query("code") String Code,@Header("Authorization") String authorization);
     @GET("hardware/vga")
-    Call<Object> getOneVga(@Query("Code") String Code,@Header("Authorization") String authorization);
+    Call<Object> getOneVga(@Query("code") String Code,@Header("Authorization") String authorization);
     @GET("hardware/motherboard")
-    Call<Object> getOneBoard(@Query("Code") String Code,@Header("Authorization") String authorization);
+    Call<Object> getOneBoard(@Query("code") String Code,@Header("Authorization") String authorization);
 
     @GET("user/phoneSignInUp/")
     Call<Object> signInUp(@Query("login") String login, @Query("fullname") String fullname);
