@@ -71,7 +71,6 @@ public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHo
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("HardwareCode", holder.code.getText().toString());
-                Log.e("code ", holder.code.getText().toString());
                 bundle.putString("HardwareType", hardwareItemsListFragment.args);
                 Navigation.findNavController(v).navigate(R.id.action_nav_hardware_to_nav_hardware_specs,bundle);
             }

@@ -55,9 +55,6 @@ public class HardwareSpecsFragment extends Fragment {
         linearLayout = root.findViewById(R.id.linlay);
         getHardwareSpecs(args_code,args_type);
 
-
-
-
         return root;
     }
 
@@ -81,19 +78,8 @@ public class HardwareSpecsFragment extends Fragment {
             @SuppressLint("ResourceType")
             @Override
             public void onResponse(Call call, Response response) {
-            //    Log.e("ponse", response.);
                 if(response.isSuccessful()) {
-                  //  String res = new Gson().toJson(response.body());
                     String res = new Gson().toJson(response.body());
-                    Log.e("res", res.toString());
-//                    try {
-//                        JSONObject jsonOb = new JSONObject(res);
-//                        Log.e("json obj", jsonOb.getJSONArray("message").toString());
-//                        JSONObject jsonObject2 = jsonOb.getJSONObject("status");
-//                        Log.e("json obj2", jsonObject2.toString());
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
                     try {
                         JSONObject jsonOb = new JSONObject(res);
                         JSONArray jsonArray = jsonOb.getJSONArray("message");
@@ -129,7 +115,6 @@ public class HardwareSpecsFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }else{
-                    Log.e("res", "unsuccessfull");
                 }
             }
             @Override
