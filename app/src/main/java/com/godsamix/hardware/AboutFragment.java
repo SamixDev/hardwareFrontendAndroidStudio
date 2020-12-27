@@ -42,7 +42,7 @@ public class AboutFragment extends Fragment {
                 .addEmail("samer.hd.ah@gmail.com","Contact me")
                 .addWebsite("https://www.linkedin.com/in/samer-dev","Connect with me on LinkedIn")
  //               .addFacebook("")
- //               .addTwitter("")
+                .addTwitter("samix_94","Follow me on Twitter")
  //               .addYoutube("")
                 .addPlayStore("https://play.google.com/store/apps/developer?id=Samix","Rate me on the play store")
                 .addGitHub("SamixDev","Fork me on GitHub")
