@@ -26,8 +26,8 @@ import java.util.List;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHolder> {
-    private List<HardListController> hard;
-    private Context context;
+    private final List<HardListController> hard;
+    private final Context context;
 
 
     public HardListAdapter(Context context, List<HardListController> hardware){
@@ -36,14 +36,16 @@ public class HardListAdapter extends RecyclerView.Adapter<HardListAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView code, name, manuf;
-        private ImageView img;
+        private final TextView code;
+        private final TextView name;
+        private final TextView manuf;
+        private final ImageView img;
         public ViewHolder(View itemView) {
             super(itemView);
-            code = (TextView) itemView.findViewById(R.id.code);
-            name = (TextView) itemView.findViewById(R.id.name);
-            manuf = (TextView) itemView.findViewById(R.id.manuf);
-            img = (ImageView) itemView.findViewById(R.id.img);
+            code = itemView.findViewById(R.id.code);
+            name = itemView.findViewById(R.id.name);
+            manuf = itemView.findViewById(R.id.manuf);
+            img = itemView.findViewById(R.id.img);
         }
     }
 

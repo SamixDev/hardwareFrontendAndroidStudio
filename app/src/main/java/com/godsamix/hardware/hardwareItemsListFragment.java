@@ -36,7 +36,7 @@ public class hardwareItemsListFragment extends Fragment {
 
     private final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
-    private List<HardListController> viewlist = new ArrayList<HardListController>();
+    private final List<HardListController> viewlist = new ArrayList<HardListController>();
 
     private HardListAdapter hardAdapter;
     public static String args;

@@ -12,11 +12,11 @@ public class RetrofitService {
     // this is the retrofit class that makes the calls
     private static final String BASE_API_URL = "http://192.168.1.4:3000/api/";
     private static Retrofit retrofit = null;
-    private static Gson gson = new GsonBuilder().create();
-    private static HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
-    private static OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder()
+    private static final Gson gson = new GsonBuilder().create();
+    private static final HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+    private static final OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor);
-    private static OkHttpClient okHttpClient = okHttpClientBuilder.build();
+    private static final OkHttpClient okHttpClient = okHttpClientBuilder.build();
     public static <T> T createService(Class<T> serviceClass){
         if(retrofit == null){
             retrofit = new Retrofit.Builder()
