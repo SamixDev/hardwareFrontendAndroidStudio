@@ -36,7 +36,7 @@ public class AboutFragment extends Fragment {
                 .enableDarkMode(false)
                 .setDescription(getString(R.string.app_desc))
  //               .setCustomFont(String) // or Typeface
-                .setImage(R.drawable.pc)
+                .setImage(R.drawable.squarecosmall)
  //               .addItem(versionElement)
                 .addGroup("Connect with us")
                 .addEmail("samer.hd.ah@gmail.com","Contact me")
@@ -58,7 +58,7 @@ public class AboutFragment extends Fragment {
         Element copyRightsElement = new Element();
         final String copyrights = String.format(getString(R.string.copy_right), Calendar.getInstance().get(Calendar.YEAR));
         copyRightsElement.setTitle(copyrights);
-        copyRightsElement.setIconDrawable(R.drawable.github);
+        copyRightsElement.setIconDrawable(R.drawable.squarecosmall);
         copyRightsElement.setAutoApplyIconTint(true);
       //  copyRightsElement.setIconTint(mehdi.sakout.aboutpage.R.color.about_item_icon_color);
         copyRightsElement.setIconNightTint(android.R.color.white);
