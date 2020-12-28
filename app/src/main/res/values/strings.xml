@@ -18,7 +18,7 @@
     <string name="app_desc">Search for the hardware you want \nInspect and see the hardware specs\nKeep track about new hardware releases \nAnd much more! \n\n This project uses <a href='www.squareco.co' >Squareco.co</a> APIs.</string>
     <string name="copy_right" translatable="false">Copyrights © %1$d</string>
 
-    <string name="privacypolicy"><u>Privacy Policy</u></string>
+    <string name="privacypolicy"><a href='https://hardware-mate.flycricket.io/privacy.html' >Privacy Policy</a></string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

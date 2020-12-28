@@ -1,6 +1,7 @@
 package com.godsamix.hardware;
 
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,11 +32,14 @@ public class VersionFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_version, container, false);
 
+        //set Version nb to textView
         TextView ver = root.findViewById(R.id.ver);
         ver.setText("Version " + BuildConfig.VERSION_NAME);
 
-       // NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-
+        //make privacy TextView clickable
+        TextView privacy = root.findViewById(R.id.privacy);
+        privacy.setMovementMethod(LinkMovementMethod.getInstance());
+        
 
         return root;
     }
