@@ -32,14 +32,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         vgafrag = root.findViewById(R.id.vga);
         aboutfrag = root.findViewById(R.id.about);
         boardfrag = root.findViewById(R.id.board);
-        buildfrag = root.findViewById(R.id.build);
+        //buildfrag = root.findViewById(R.id.build);
 
         versionfrag.setOnClickListener(this);
         cpufrag.setOnClickListener(this);
         vgafrag.setOnClickListener(this);
         aboutfrag.setOnClickListener(this);
         boardfrag.setOnClickListener(this);
-        buildfrag.setOnClickListener(this);
+        //buildfrag.setOnClickListener(this);
 
         return root;
     }
