@@ -75,8 +75,9 @@
                             android:layout_below="@+id/imgView1"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="5dp"
-                            android:text="Build a PC!"
+                            android:text="Build a PC!\n(Coming soon...)"
                             android:textSize="18sp"
+                            android:gravity="center"
                             android:textStyle="bold" />
 
                     </RelativeLayout>

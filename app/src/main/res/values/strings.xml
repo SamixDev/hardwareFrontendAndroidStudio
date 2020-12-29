@@ -15,6 +15,7 @@
     <string name="vga">VGA List</string>
     <string name="about">About</string>
 
+
     <string name="app_desc">Search for the hardware you want \nInspect and see the hardware specs\nKeep track about new hardware releases \nAnd much more! \n\n This project uses <a href='www.squareco.co' >Squareco.co</a> APIs.</string>
     <string name="copy_right" translatable="false">Copyrights © %1$d</string>
 
