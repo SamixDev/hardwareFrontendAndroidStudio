@@ -14,11 +14,11 @@
 
         <item android:title="Hardware">
             <menu>
-                <item
-                    android:id="@+id/nav_build"
-                    android:icon="@drawable/pc"
-                    android:title="@string/build"
-                    android:checkable="true"/>
+<!--                <item-->
+<!--                    android:id="@+id/nav_build"-->
+<!--                    android:icon="@drawable/pc"-->
+<!--                    android:title="@string/build"-->
+<!--                    android:checkable="true"/>-->
                 <item
                     android:id="@+id/nav_board"
                     android:icon="@drawable/board"

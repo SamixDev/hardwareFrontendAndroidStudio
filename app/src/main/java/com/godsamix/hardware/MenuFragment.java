@@ -59,7 +59,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 Navigation.findNavController(view).navigate(R.id.action_menu_to_vgalist);
                 break;
             case R.id.build:
-                Navigation.findNavController(view).navigate(R.id.action_menu_to_build);
+          //      Navigation.findNavController(view).navigate(R.id.action_menu_to_build);
                 break;
             case R.id.board:
                 Navigation.findNavController(view).navigate(R.id.action_menu_to_boardlist);
