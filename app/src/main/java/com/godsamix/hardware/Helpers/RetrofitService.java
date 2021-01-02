@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
     // this is the retrofit class that makes the calls
-    private static final String BASE_API_URL = "http://192.168.1.4:3000/api/";
+    private static final String BASE_API_URL = "http://192.168.1.5:3000/api/";
     private static Retrofit retrofit = null;
     private static final Gson gson = new GsonBuilder().create();
     private static final HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
