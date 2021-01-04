@@ -1,6 +1,9 @@
 package com.godsamix.hardware;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -73,6 +76,8 @@ public class hardwareItemsListFragment extends Fragment {
         }else{
             warning.setVisibility(View.INVISIBLE);
         }
+
+
 
 
         recyclerView = root.findViewById(R.id.recyclerview);
@@ -225,4 +230,5 @@ public class hardwareItemsListFragment extends Fragment {
             }
         });
     }
+
 }
