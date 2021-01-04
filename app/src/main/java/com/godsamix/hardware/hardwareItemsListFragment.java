@@ -68,10 +68,12 @@ public class hardwareItemsListFragment extends Fragment {
         //warning not signed in
         TextView warning = root.findViewById(R.id.notifier);
         if(idToken==""){
+            warning.setText("⚠ Please Sign In to view content");
             warning.setVisibility(View.VISIBLE);
         }else{
             warning.setVisibility(View.INVISIBLE);
         }
+
 
         recyclerView = root.findViewById(R.id.recyclerview);
         args = this.getArguments().getString("listType");
